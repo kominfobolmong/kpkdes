@@ -19,7 +19,6 @@ use App\Http\Controllers\Admin\SumberDanaController;
 use App\Http\Controllers\Admin\PaudController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\KecamatanController;
 use App\Http\Controllers\Admin\RekeningController;
 use App\Http\Controllers\Admin\UsiaController;
 use App\Http\Controllers\Admin\WaktuController;
