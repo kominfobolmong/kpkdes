@@ -6,19 +6,19 @@
             processing: true,
             serverSide: true,
             autoWidth: false,
-            ajax: '/admin/kabuapten/get_data',
+            ajax: '/admin/kabupaten/get_data',
             columns: [{
                     data: 'id',
-                    name: 'kabuapten.id',
+                    name: 'kabupaten.id',
                     visible: false
                 },
                 {
                     data: 'created_at',
-                    name: 'kabuapten.created_at'
+                    name: 'kabupaten.created_at'
                 },
                 {
                     data: 'nama',
-                    name: 'kabuapten.nama'
+                    name: 'kabupaten.nama'
                 },
                 {
                     data: 'action',
@@ -59,8 +59,13 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="d-flex justify-content-between">
-                            <h3 class="card-title">Kabupaten</h3>
+                        <h3 class="card-title">Kabupaten</h3>
+                        <div class="card-tools">
+                            @can('kabupaten-create')
+                            <a href="{{ route('kabupaten.create') }}" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Create
+                            </a>
+                            @endcan
                         </div>
 
                     </div>

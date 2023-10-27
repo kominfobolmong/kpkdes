@@ -32,7 +32,7 @@ class BidangController extends Controller
     {
 
         $items = Bidang::select(['bidang.*', 'desa.nama as desa'])
-            ->join('desa', 'bidang.id_desa', '=', 'desa.id')
+            ->leftJoin('desa', 'bidang.id_desa', '=', 'desa.id')
             ->orderBy('bidang.id', 'desc');
 
         return DataTables::of($items)
@@ -42,10 +42,13 @@ class BidangController extends Controller
                 $btn .= '<a href="javascript:void(0)" title="Hapus" onclick="delete_data(' . "'" . $row->id . "'" . ')" class="btn btn-danger"><i class="fas fa-trash"></i></a>';
                 return $btn;
             })
+            ->editColumn('nama', function ($row) {
+                return $row->nama ? '<a href="/admin/sub_bidang/' . $row->id . '" class="text-bold text-dark">' . $row->nama . '</a>' : '';
+            })
             ->editColumn('created_at', function ($row) {
                 return $row->created_at ? with(new Carbon($row->created_at))->format('m/d/Y') : '';
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'nama'])
             ->make(true);
     }
 

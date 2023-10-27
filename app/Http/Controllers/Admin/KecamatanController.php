@@ -34,7 +34,7 @@ class KecamatanController extends Controller
     public function getData()
     {
         $items = Kecamatan::select(['kecamatan.*', 'kabupaten.nama as kabupaten'])
-            ->join('kabupaten', 'kecamatan.id_kabupaten', '=', 'kabupaten.id');
+            ->leftJoin('kabupaten', 'kecamatan.id_kabupaten', '=', 'kabupaten.id');
 
         return DataTables::of($items)
             ->addColumn('action', function ($row) {

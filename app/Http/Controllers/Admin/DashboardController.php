@@ -11,8 +11,8 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $opds = Opd::all();
-        return view('dashboard', compact('opds'));
+        // $opds = Opd::all();
+        return view('dashboard');
     }
 
     public function tahun(Request $request)

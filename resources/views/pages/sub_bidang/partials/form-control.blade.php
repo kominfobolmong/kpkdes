@@ -13,6 +13,7 @@
         </ul>
     </div>
     @endif
+    @if(!$bidang)
     <div class="form-group">
         <label for="id_bidang">Bidang</label>
         <select class="form-control select2" name="id_bidang" style="width: 100%;">
@@ -22,7 +23,15 @@
             @endforeach
         </select>
     </div>
-    <div class="form-group">
+    @else
+    <input type="hidden" name="id_bidang" value="{{ $bidang->id ?? null }}" />
+    <div class="mb-2">
+    <div class="mb-2">
+        <div>Bidang</div>
+        <div class="text-bold">{{ $bidang->nama ?? null }}</div>
+    </div>
+    @endif
+    <div class="form-group mt-4">
         <label for="nama">Nama</label>
         <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama" value="{{ old('nama') ?? $item->nama }}">
     </div>

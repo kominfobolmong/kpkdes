@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class SubRekening extends Model
 {
     use HasFactory;
+    protected $table = 'sub_rekening';
     protected $fillable = [
-        'id_rekening', 'kode', 'uraian'
+        'id_rekening', 'kode', 'nama'
     ];
 
     protected $hidden = [];

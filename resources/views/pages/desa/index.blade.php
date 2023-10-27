@@ -6,15 +6,15 @@
             processing: true,
             serverSide: true,
             autoWidth: false,
-            ajax: '/admin/daging/get_data',
+            ajax: '/admin/desa/get_data',
             columns: [{
                     data: 'id',
-                    name: 'dagings.id',
+                    name: 'desa.id',
                     visible: false
                 },
                 {
                     data: 'created_at',
-                    name: 'dagings.created_at'
+                    name: 'desa.created_at'
                 },
                 {
                     data: 'kecamatan',
@@ -39,7 +39,7 @@
         if (confirm('Are you sure delete this  data?')) {
 
             $.ajax({
-                url: "/admin/daging/" + id,
+                url: "/admin/desa/" + id,
                 type: "DELETE",
                 data: {
                     "_token": "{{ csrf_token() }}",
@@ -63,8 +63,13 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="d-flex justify-content-between">
-                            <h3 class="card-title">Desa</h3>
+                        <h3 class="card-title">Desa</h3>
+                        <div class="card-tools">
+                            @can('desa-create')
+                            <a href="{{ route('desa.create') }}" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Create
+                            </a>
+                            @endcan
                         </div>
 
                     </div>

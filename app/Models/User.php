@@ -55,8 +55,8 @@ class User extends Authenticatable
         return "https://www.gravatar.com/avatar/" . md5(strtolower(trim($this->email))) . "?d=mp&s=" . $size;
     }
 
-    public function opd()
+    public function desa()
     {
-        return $this->belongsToMany(Opd::class, 'opd_user', 'id_user', 'id_opd');
+        return $this->belongsToMany(Desa::class, 'desa_user', 'id_user', 'id_desa');
     }
 }

@@ -2,36 +2,7 @@
 @push('addon-script')
 <script>
     $(function() {
-        $('#data-table').DataTable({
-            processing: true,
-            serverSide: true,
-            autoWidth: false,
-            ajax: '/admin/bidang/get_data',
-            columns: [{
-                    data: 'id',
-                    name: 'bidang.id',
-                    visible: false
-                },
-                {
-                    data: 'created_at',
-                    name: 'bidang.created_at'
-                },
-                {
-                    data: 'nama',
-                    name: 'bidang.nama'
-                },
-                {
-                    data: 'desa',
-                    name: 'desa.nama'
-                },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
-                }
-            ]
-        });
+        $('#data-table').DataTable();
     });
 
     function delete_data(id) {
@@ -39,7 +10,7 @@
         if (confirm('Are you sure delete this  data?')) {
 
             $.ajax({
-                url: "/admin/bidang/" + id,
+                url: "/admin/sub_rekening/" + id,
                 type: "DELETE",
                 data: {
                     "_token": "{{ csrf_token() }}",
@@ -63,10 +34,10 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Bidang</h3>
+                        <h3 class="card-title">Rekening</h3>
                         <div class="card-tools">
-                            @can('bidang-create')
-                            <a href="{{ route('bidang.create') }}" class="btn btn-primary">
+                            @can('sub_rekening-create')
+                            <a href="/admin/sub_rekening/create?id_rekening={{ $item->id }}" class="btn btn-primary">
                                 <i class="fas fa-plus"></i> Create
                             </a>
                             @endcan
@@ -83,24 +54,30 @@
                         <table class="table table-striped" id="data-table">
                             <thead>
                                 <tr>
-                                    <th>No</th>
                                     <th>Tanggal Entri</th>
-                                    <th>Bidang</th>
-                                    <th>Desa</th>
-
-                                    <th>--</th>
+                                    <th>Kode</th>
+                                    <th>Uraian</th>
+                                </tr>
+                                <tr class="text-bold">
+                                    <td>{{ $item->created_at ?? null }}</td>
+                                    <td>{{ $item->kode ?? null }}</td>
+                                    <td><a href="/admin/rekening" class="text-bold text-dark">{{ $item->nama ?? null }}</a></td>
                                 </tr>
                             </thead>
                             <tbody>
-
+                                @foreach($item->sub_rekening as $sub_rekening)
+                                <tr>
+                                    <td>{{ $sub_rekening->created_at ?? null }}</td>
+                                    <td>{{ $sub_rekening->kode ?? null }}</td>
+                                    <td>{{ $sub_rekening->nama ?? null }}</td>
+                                </tr>
+                                @endforeach
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>No</th>
                                     <th>Tanggal Entri</th>
-                                    <th>Bidang</th>
-                                    <th>Desa</th>
-                                    <th>--</th>
+                                    <th>Kode</th>
+                                    <th>Uraian</th>
                                 </tr>
                             </tfoot>
                         </table>

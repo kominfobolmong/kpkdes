@@ -32,7 +32,7 @@ class DesaController extends Controller
     public function getData()
     {
 
-        $items = Desa::select(['desa.id', 'kecamatan.nama as kecamatan'])
+        $items = Desa::select(['desa.*', 'kecamatan.nama as kecamatan'])
             ->join('kecamatan', 'desa.id_kecamatan', '=', 'kecamatan.id')
             ->orderBy('desa.id', 'desc');
 

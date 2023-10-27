@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class SubBidang extends Model
 {
     use HasFactory;
-    protected $table = 'budidaya_ikans';
+    public $timestamps = false;
+    public $incrementing = false;
+    protected $table = 'sub_bidang';
     protected $fillable = [
         'id_bidang', 'nama'
     ];

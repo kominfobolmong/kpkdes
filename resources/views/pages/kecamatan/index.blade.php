@@ -65,9 +65,11 @@
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
                             <h3 class="card-title">Kecamatan</h3>
+                            @can('kecamatan-create')
                             <a href="{{ route('kecamatan.create') }}" class="btn btn-primary">
                                 <i class="fas fa-plus"></i> Create
                             </a>
+                            @endcan
                         </div>
 
                     </div>

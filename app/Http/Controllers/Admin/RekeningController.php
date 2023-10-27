@@ -40,10 +40,13 @@ class rekeningController extends Controller
                 $btn .= '<a href="javascript:void(0)" title="Hapus" onclick="delete_data(' . "'" . $row->id . "'" . ')" class="btn btn-danger"><i class="fas fa-trash"></i></a>';
                 return $btn;
             })
+            ->editColumn('nama', function ($row) {
+                return $row->nama ? '<a href="/admin/sub_rekening/' . $row->id . '" class="text-dark text-bold">' . $row->nama . '</a>' : '';
+            })
             ->editColumn('created_at', function ($row) {
                 return $row->created_at ? with(new Carbon($row->created_at))->format('m/d/Y') : '';
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'nama'])
             ->make(true);
     }
 

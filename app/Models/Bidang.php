@@ -14,4 +14,8 @@ class Bidang extends Model
     ];
 
     protected $hidden = [];
+    public function sub_bidang()
+    {
+        return $this->hasMany(SubBidang::class, 'id_bidang', 'id');
+    }
 }

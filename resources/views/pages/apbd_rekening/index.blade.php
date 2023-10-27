@@ -6,23 +6,23 @@
             processing: true,
             serverSide: true,
             autoWidth: false,
-            ajax: '/admin/bidang/get_data',
+            ajax: '/admin/kelurahan/get_data',
             columns: [{
                     data: 'id',
-                    name: 'bidang.id',
+                    name: 'kelurahans.id',
                     visible: false
                 },
                 {
                     data: 'created_at',
-                    name: 'bidang.created_at'
+                    name: 'kelurahans.created_at'
+                },
+                {
+                    data: 'kecamatan',
+                    name: 'kecamatan.nama'
                 },
                 {
                     data: 'nama',
-                    name: 'bidang.nama'
-                },
-                {
-                    data: 'desa',
-                    name: 'desa.nama'
+                    name: 'kelurahans.nama'
                 },
                 {
                     data: 'action',
@@ -39,7 +39,7 @@
         if (confirm('Are you sure delete this  data?')) {
 
             $.ajax({
-                url: "/admin/bidang/" + id,
+                url: "/admin/kelurahan/" + id,
                 type: "DELETE",
                 data: {
                     "_token": "{{ csrf_token() }}",
@@ -63,13 +63,8 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Bidang</h3>
-                        <div class="card-tools">
-                            @can('bidang-create')
-                            <a href="{{ route('bidang.create') }}" class="btn btn-primary">
-                                <i class="fas fa-plus"></i> Create
-                            </a>
-                            @endcan
+                        <div class="d-flex justify-content-between">
+                            <h3 class="card-title">APBD</h3>
                         </div>
 
                     </div>
@@ -85,9 +80,8 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Tanggal Entri</th>
-                                    <th>Bidang</th>
-                                    <th>Desa</th>
-
+                                    <th>Kecamatan</th>
+                                    <th>Kelurahan</th>
                                     <th>--</th>
                                 </tr>
                             </thead>
@@ -98,8 +92,8 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Tanggal Entri</th>
-                                    <th>Bidang</th>
-                                    <th>Desa</th>
+                                    <th>Kecamatan</th>
+                                    <th>Kelurahan</th>
                                     <th>--</th>
                                 </tr>
                             </tfoot>

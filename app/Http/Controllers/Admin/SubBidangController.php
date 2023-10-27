@@ -58,9 +58,13 @@ class SubBidangController extends Controller
      */
     public function create()
     {
+        $bidang = new Bidang();
+        if (request('id_bidang')) {
+            $bidang = Bidang::findOrFail(request('id_bidang'));
+        }
         $item = new SubBidang();
         $bidangs = Bidang::get();
-        return view('pages.sub_bidang.create', compact('item', 'bidangs'));
+        return view('pages.sub_bidang.create', compact('item', 'bidangs', 'bidang'));
     }
 
     /**
@@ -74,7 +78,7 @@ class SubBidangController extends Controller
         $data = $request->all();
         SubBidang::create($data);
         session()->flash('success', 'Item was created.');
-        return redirect()->route('sub_bidang.create');
+        return redirect('admin/sub_bidang/' . $data['id_bidang']);
     }
 
     /**
@@ -85,7 +89,8 @@ class SubBidangController extends Controller
      */
     public function show($id)
     {
-        //
+        $item = Bidang::findOrFail($id);
+        return view('pages.sub_bidang.show', compact('item'));
     }
 
     /**

@@ -21,8 +21,8 @@
                     name: 'rekening.kode'
                 },
                 {
-                    data: 'uraian',
-                    name: 'rekening.uraian'
+                    data: 'nama',
+                    name: 'rekening.nama'
                 },
                 {
                     data: 'action',
@@ -63,8 +63,13 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="d-flex justify-content-between">
-                            <h3 class="card-title">rekening</h3>
+                        <h3 class="card-title">Rekening</h3>
+                        <div class="card-tools">
+                            @can('rekening-create')
+                            <a href="{{ route('rekening.create') }}" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Create
+                            </a>
+                            @endcan
                         </div>
 
                     </div>
@@ -79,14 +84,9 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Tanggal</th>
-                                    <th>Kecamatan</th>
-                                    <th>Tahun</th>
-                                    <th>0 18 Tahun</th>
-                                    <th>Memiliki rekening</th>
-                                    <th>Persentase Memiliki rekening</th>
-                                    <th>Belum Memiliki rekening</th>
-                                    <th>Persentase Belum Memiliki rekening</th>
+                                    <th>Tanggal Entri</th>
+                                    <th>Kode</th>
+                                    <th>Nama</th>
                                     <th>--</th>
                                 </tr>
                             </thead>
@@ -96,14 +96,9 @@
                             <tfoot>
                                 <tr>
                                     <th>No</th>
-                                    <th>Tanggal</th>
-                                    <th>Kecamatan</th>
-                                    <th>Tahun</th>
-                                    <th>0 18 Tahun</th>
-                                    <th>Memiliki rekening</th>
-                                    <th>Persentase Memiliki rekening</th>
-                                    <th>Belum Memiliki rekening</th>
-                                    <th>Persentase Belum Memiliki rekening</th>
+                                    <th>Tanggal Entri</th>
+                                    <th>Kode</th>
+                                    <th>Nama</th>
                                     <th>--</th>
                                 </tr>
                             </tfoot>

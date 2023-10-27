@@ -1,4 +1,11 @@
 @extends('layouts.backend.app')
+@push('addon-script')
+<script>
+    $(function() {
+        $('.table').DataTable();
+    });
+</script>
+@endpush
 @section('content')
 <section class="content">
     <div class="container-fluid">
@@ -32,7 +39,7 @@
 
                     </div>
                     <!-- /.card-header -->
-                    <div class="card-body p-0">
+                    <div class="card-body">
                         @if(session()->has('success'))
                         <div class="alert alert-success">
                             {{ session()->get('success') }}
@@ -41,7 +48,6 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>No</th>
                                     <th>Name</th>
                                     <th>Username</th>
                                     <th>Email</th>
@@ -52,7 +58,6 @@
                             <tbody>
                                 @forelse($items as $item)
                                 <tr>
-                                    <td>{{ $items->count() * ($items->currentPage() - 1) + $loop->iteration }}</td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->username }}</td>
                                     <td>{{ $item->email }}</td>
@@ -88,7 +93,6 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer clearfix">
-                        {{ $items->links() }}
                     </div>
                 </div>
             </div>

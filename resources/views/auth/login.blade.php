@@ -24,7 +24,7 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="{{ route('home') }}"><b>SIPODA</b></a>
+            <a href="{{ route('home') }}"><b>KPKDES</b></a>
         </div>
         <!-- /.login-logo -->
         <div class="card">

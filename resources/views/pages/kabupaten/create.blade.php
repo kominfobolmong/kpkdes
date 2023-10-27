@@ -13,15 +13,15 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="card card-primary">
+                <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Change Kabuapten</h3>
+                        <h3 class="card-title">Change Kabupaten</h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form method="post" action="{{ route('kabuapten.store') }}" enctype="multipart/form-data">
+                    <form method="post" action="{{ route('kabupaten.store') }}" enctype="multipart/form-data">
                         @csrf
-                        @include('pages.kabuapten.partials.form-control')
+                        @include('pages.kabupaten.partials.form-control')
                     </form>
                 </div>
             </div>

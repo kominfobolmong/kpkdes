@@ -14,4 +14,9 @@ class Rekening extends Model
     ];
 
     protected $hidden = [];
+
+    public function sub_rekening()
+    {
+        return $this->hasMany(SubRekening::class, 'id_rekening', 'id');
+    }
 }

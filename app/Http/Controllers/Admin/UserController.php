@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserRequest;
+use App\Models\Desa;
 use App\Models\Opd;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -32,7 +33,7 @@ class UserController extends Controller
                 return $request->nama ?
                     $query->where('name', 'LIKE', '%' . $request->nama . '%') : '';
             })->orderBy('id', 'desc')
-                ->paginate(10);
+                ->get();
         } else {
             $items = User::where('id', auth()->user()->id)->paginate(10);
         }
@@ -48,8 +49,8 @@ class UserController extends Controller
     {
         $item = new User();
         $roles = Role::pluck('name', 'name')->all();
-        $opds = Opd::all();
-        return view('pages.user.create', compact('item', 'roles', 'opds'));
+        $desas = Desa::all();
+        return view('pages.user.create', compact('item', 'roles', 'desas'));
     }
 
     /**
@@ -66,7 +67,7 @@ class UserController extends Controller
         }
         $user = User::create($data);
         $user->assignRole($request->input('roles'));
-        $user->opd()->attach($request->id_opd);
+        $user->desa()->attach($request->id_opd);
         session()->flash('success', 'User was created.');
         return redirect()->route('user.create');
     }
@@ -93,9 +94,9 @@ class UserController extends Controller
     {
         $item = User::findOrFail($id);
         $roles = Role::pluck('name', 'name')->all();
-        $opds = Opd::all();
+        $desas = Desa::all();
         $userRole = $item->roles->pluck('name', 'name')->all();
-        return view('pages.user.edit', compact('item', 'roles', 'userRole', 'opds'));
+        return view('pages.user.edit', compact('item', 'roles', 'userRole', 'desas'));
     }
 
     /**
@@ -126,7 +127,7 @@ class UserController extends Controller
         DB::table('model_has_roles')->where('model_id', $id)->delete();
 
         $item->assignRole($request->input('roles'));
-        $item->opd()->sync($request->id_opd);
+        $item->desa()->sync($request->id_opd);
         session()->flash('success', 'User was updated.');
         return back()->withInput();
     }
@@ -141,22 +142,8 @@ class UserController extends Controller
     {
         $item = User::findOrFail($id);
         $item->delete();
-        $item->opd()->detach();
+        $item->desa()->detach();
         session()->flash('success', 'User was Deleted.');
         return redirect()->route('user.index');
-    }
-
-    public function cekTelpon($val)
-    {
-        $item = User::where('telpon', $val)->count();
-        if ($item > 0) {
-            return response()->json([
-                'status' => true
-            ]);
-        } else {
-            return response()->json([
-                'status' => false
-            ]);
-        }
     }
 }

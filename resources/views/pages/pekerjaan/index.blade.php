@@ -59,8 +59,13 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="d-flex justify-content-between">
-                            <h3 class="card-title">Pekerjaan</h3>
+                        <h3 class="card-title">Pekerjaan</h3>
+                        <div class="card-tools">
+                            @can('pekerjaan-create')
+                            <a href="{{ route('pekerjaan.create') }}" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Create
+                            </a>
+                            @endcan
                         </div>
 
                     </div>

@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">SIPODA</div>
+                    <div class="card-header">KPKDES</div>
                     <div class="card-body">
 
                     </div>

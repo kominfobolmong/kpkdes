@@ -26,7 +26,7 @@ class SubRekeningRequest extends FormRequest
         return [
             'id_rekening' => 'required|integer|exists:rekening,id',
             'kode' => 'required|string|max:255',
-            'uraian' => 'required|string|max:255',
+            'nama' => 'required|string|max:255',
         ];
     }
 }

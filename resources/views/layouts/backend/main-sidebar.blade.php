@@ -32,9 +32,9 @@
                          </p>
                      </a>
                      <ul class="nav nav-treeview">
-                        @can('apbd-list')
+                        @can('apbd_rekening-list')
                         <li class="nav-item">
-                            <a href="{{ route('apbd.index') }}" class="nav-link">
+                            <a href="{{ route('apbd_rekening.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>
                                     APBD Desa
@@ -83,9 +83,9 @@
                              </a>
                          </li>
                          @endcan
-                         @can('kecamatan-list')
+                         @can('desa-list')
                          <li class="nav-item">
-                             <a href="{{ route('kecamatan.index') }}" class="nav-link">
+                             <a href="{{ route('desa.index') }}" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
                                  <p>
                                     Desa

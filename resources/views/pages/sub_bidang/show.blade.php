@@ -2,36 +2,7 @@
 @push('addon-script')
 <script>
     $(function() {
-        $('#data-table').DataTable({
-            processing: true,
-            serverSide: true,
-            autoWidth: false,
-            ajax: '/admin/kelurahan/get_data',
-            columns: [{
-                    data: 'id',
-                    name: 'kelurahans.id',
-                    visible: false
-                },
-                {
-                    data: 'created_at',
-                    name: 'kelurahans.created_at'
-                },
-                {
-                    data: 'kecamatan',
-                    name: 'kecamatan.nama'
-                },
-                {
-                    data: 'nama',
-                    name: 'kelurahans.nama'
-                },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
-                }
-            ]
-        });
+        $('#data-table').DataTable();
     });
 
     function delete_data(id) {
@@ -39,7 +10,7 @@
         if (confirm('Are you sure delete this  data?')) {
 
             $.ajax({
-                url: "/admin/kelurahan/" + id,
+                url: "/admin/sub_bidang/" + id,
                 type: "DELETE",
                 data: {
                     "_token": "{{ csrf_token() }}",
@@ -63,8 +34,13 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="d-flex justify-content-between">
-                            <h3 class="card-title">Kelurahan</h3>
+                        <h3 class="card-title">Sub Bidang</h3>
+                        <div class="card-tools">
+                            @can('sub_bidang-create')
+                            <a href="/admin/sub_bidang/create?id_bidang={{ $item->id }}" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Create
+                            </a>
+                            @endcan
                         </div>
 
                     </div>
@@ -78,23 +54,26 @@
                         <table class="table table-striped" id="data-table">
                             <thead>
                                 <tr>
-                                    <th>No</th>
-                                    <th>Tanggal Entri</th>
-                                    <th>Kecamatan</th>
-                                    <th>Kelurahan</th>
-                                    <th>--</th>
+                                    <th>Desa</th>
+                                    <th>Bidang</th>
+                                </tr>
+                                <tr class="text-bold">
+                                    <td>{{ $item->desa->nama ?? null }}</td>
+                                    <td><a href="/admin/bidang" class="text-dark">{{ $item->nama ?? null }}</a></td>
                                 </tr>
                             </thead>
                             <tbody>
-
+                                @foreach($item->sub_bidang as $sub_bidang)
+                                <tr>
+                                    <td>{{ $item->desa->nama ?? null }}</td>
+                                    <td>{{ $sub_bidang->nama ?? null }}</td>
+                                </tr>
+                                @endforeach
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>No</th>
-                                    <th>Tanggal Entri</th>
-                                    <th>Kecamatan</th>
-                                    <th>Kelurahan</th>
-                                    <th>--</th>
+                                    <th>Bidang</th>
+                                    <th>Nama</th>
                                 </tr>
                             </tfoot>
                         </table>

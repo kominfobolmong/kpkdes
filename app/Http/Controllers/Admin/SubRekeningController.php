@@ -58,9 +58,13 @@ class SubRekeningController extends Controller
      */
     public function create()
     {
+        $rekening = new Rekening();
+        if (request('id_rekening')) {
+            $rekening = Rekening::findOrFail(request('id_rekening'));
+        }
         $item = new SubRekening();
         $rekenings = Rekening::get();
-        return view('pages.sub_bidang.create', compact('item', 'rekenings'));
+        return view('pages.sub_rekening.create', compact('item', 'rekenings', 'rekening'));
     }
 
     /**
@@ -74,7 +78,7 @@ class SubRekeningController extends Controller
         $data = $request->all();
         SubRekening::create($data);
         session()->flash('success', 'Item was created.');
-        return redirect()->route('sub_bidang.create');
+        return redirect('admin/sub_rekening/' . $data['id_rekening']);
     }
 
     /**
@@ -85,7 +89,8 @@ class SubRekeningController extends Controller
      */
     public function show($id)
     {
-        //
+        $item = Rekening::findOrFail($id);
+        return view('pages.sub_rekening.show', compact('item'));
     }
 
     /**
@@ -98,7 +103,7 @@ class SubRekeningController extends Controller
     {
         $item = SubRekening::findOrFail($id);
         $rekenings = Rekening::get();
-        return view('pages.sub_bidang.edit', compact('item', 'rekenings'));
+        return view('pages.sub_rekening.edit', compact('item', 'rekenings'));
     }
 
     /**
@@ -114,7 +119,7 @@ class SubRekeningController extends Controller
         $item = SubRekening::findOrFail($id);
         $item->update($data);
         session()->flash('success', 'Item was updated.');
-        return redirect()->route('sub_bidang.index');
+        return redirect()->route('sub_rekening.index');
     }
 
     /**

@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Desa extends Model
 {
     use HasFactory;
+    protected $table = 'desa';
     protected $fillable = [
-        'id_kecamatan', 'nama'
+        'id_kecamatan', 'nama', 'id_desa'
     ];
 
     protected $hidden = [];
@@ -17,6 +18,6 @@ class Desa extends Model
 
     public function kecamatan()
     {
-        return $this->belongsTo(Opd::class, 'id_opd', 'id');
+        return $this->belongsTo(Kecamatan::class, 'id_kecamatan', 'id');
     }
 }
