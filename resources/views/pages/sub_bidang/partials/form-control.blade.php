@@ -26,16 +26,20 @@
     @else
     <input type="hidden" name="id_bidang" value="{{ $bidang->id ?? null }}" />
     <div class="mb-2">
+
     <div class="mb-2">
         <div>Bidang</div>
         <div class="text-bold">{{ $bidang->nama ?? null }}</div>
     </div>
     @endif
+    <div class="form-group">
+        <label for="kode">Kode</label>
+        <input type="text" class="form-control" id="kode" name="kode" placeholder="kode" value="{{ old('kode') ?? $item->kode }}">
+    </div>
     <div class="form-group mt-4">
-        <label for="nama">Nama</label>
+        <label for="nama">Nama (Sub bidang)</label>
         <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama" value="{{ old('nama') ?? $item->nama }}">
     </div>
-    
 </div>
 <!-- /.card-body -->
 

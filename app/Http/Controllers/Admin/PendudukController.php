@@ -7,6 +7,7 @@ use App\Http\Requests\PendudukRequest;
 use App\Models\Pekerjaan;
 use App\Models\Hubungan;
 use App\Models\Desa;
+use App\Models\Kabupaten;
 use App\Models\Penduduk;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -34,10 +35,10 @@ class PendudukController extends Controller
     public function getData()
     {
 
-        $items = Penduduk::select(['penduduk.*', 'desa.id_desa desa', 'pekerjaan.nama as pekerjaan', 'hubungan.nama as hubungan'])
+        $items = Penduduk::select('penduduk.*', 'desa.nama as desa', 'kecamatan.nama as kecamatan', 'kabupaten.nama as kabupaten')
             ->join('desa', 'penduduk.id_desa', '=', 'desa.id')
-            ->join('pekerjaan', 'penduduk.id_pekerjaan', '=', 'pekerjaan.id')
-            ->join('hubungan', 'penduduk.id_hubungan', '=', 'hubungan.id')
+            ->join('kecamatan', 'desa.id_kecamatan', '=', 'kecamatan.id')
+            ->join('kabupaten', 'kecamatan.id_kabupaten', '=', 'kabupaten.id')
             ->orderBy('penduduk.id', 'desc');
 
         return DataTables::of($items)
@@ -63,10 +64,10 @@ class PendudukController extends Controller
     {
         // dd(auth()->user()->pekerjaan()->name);
         $item = new Penduduk();
-        $pekerjaan = Pekerjaan::get();
+        $pekerjaans = Pekerjaan::get();
         $hubungans = Hubungan::get();
-        $desas = Desa::get();
-        return view('pages.penduduk.create', compact('item', 'pekerjaan', 'hubungans', 'desas'));
+        $kabupatens = Kabupaten::get();
+        return view('pages.penduduk.create', compact('item', 'pekerjaans', 'hubungans', 'kabupatens'));
     }
 
     /**
@@ -103,10 +104,10 @@ class PendudukController extends Controller
     public function edit($id)
     {
         $item = Penduduk::findOrFail($id);
-        $pekerjaan = Pekerjaan::get();
+        $pekerjaans = Pekerjaan::get();
         $hubungans = Hubungan::get();
-        $desas = Desa::get();
-        return view('pages.penduduk.edit', compact('item', 'pekerjaan', 'hubungans', 'desas'));
+        $kabupatens = Kabupaten::get();
+        return view('pages.penduduk.edit', compact('item', 'pekerjaans', 'hubungans', 'kabupatens'));
     }
 
     /**
@@ -136,5 +137,15 @@ class PendudukController extends Controller
         $item = Penduduk::findOrFail($id);
         $item->delete();
         return response()->json(['success' => 'Item was deleted successfully']);
+    }
+
+    public function getPenduduk($id)
+    {
+        $items = Penduduk::where('id_desa', $id)->get();
+        $html = '<option>Choose One</option>';
+        foreach ($items as $item) {
+            $html .= '<option value="' . $item->id . '">' . $item->nama . '</option>';
+        }
+        echo $html;
     }
 }

@@ -126,4 +126,14 @@ class KecamatanController extends Controller
         $item->delete();
         return response()->json(['success' => 'Item was deleted successfully']);
     }
+
+    public function getList($id)
+    {
+        $items = Kecamatan::where('id_kabupaten', $id)->get();
+        $html = '<option>Choose One</option>';
+        foreach ($items as $item) {
+            $html .= '<option value="' . $item->id . '">' . $item->nama . '</option>';
+        }
+        echo $html;
+    }
 }

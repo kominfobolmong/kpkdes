@@ -17,12 +17,12 @@
                     name: 'bidang.created_at'
                 },
                 {
-                    data: 'nama',
-                    name: 'bidang.nama'
+                    data: 'kode',
+                    name: 'bidang.kode'
                 },
                 {
-                    data: 'desa',
-                    name: 'desa.nama'
+                    data: 'nama',
+                    name: 'bidang.nama'
                 },
                 {
                     data: 'action',
@@ -85,8 +85,9 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Tanggal Entri</th>
+                                    <th>Kode</th>
                                     <th>Bidang</th>
-                                    <th>Desa</th>
+                                    {{-- <th>Desa</th> --}}
 
                                     <th>--</th>
                                 </tr>
@@ -98,8 +99,9 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Tanggal Entri</th>
+                                    <th>Kode</th>
                                     <th>Bidang</th>
-                                    <th>Desa</th>
+                                    {{-- <th>Desa</th> --}}
                                     <th>--</th>
                                 </tr>
                             </tfoot>

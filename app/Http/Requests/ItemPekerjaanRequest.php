@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SubRekeningRequest extends FormRequest
+class ItemPekerjaanRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,10 @@ class SubRekeningRequest extends FormRequest
     public function rules()
     {
         return [
-            'id_rekening' => 'required|integer|exists:rekening,id',
-            'kode' => 'required|string|max:255',
-            'nama' => 'required|string|max:255',
+            'id_apbd_rekening' => 'required|integer|exists:apbd_rekening,id',
+            'id_desa' => 'required|integer|exists:desa,id',
+            'target' => 'required',
+            'anggaran' => 'required',
         ];
     }
 }

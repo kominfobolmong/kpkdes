@@ -42,28 +42,40 @@
                             </a>
                         </li>
                         @endcan
-                         @can('rekening-list')
+                         @can('tenaga_kerja-list')
                          <li class="nav-item">
-                             <a href="{{ route('rekening.index') }}" class="nav-link">
+                             <a href="{{ route('tenaga_kerja.index') }}" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
                                  <p>
-                                    Rekening
+                                    Pekerja/Tenaga Kerja
                                  </p>
                              </a>
                          </li>
                          @endcan
-                         @can('sumber_dana-list')
-                         <li class="nav-item">
-                             <a href="{{ route('sumber_dana.index') }}" class="nav-link">
-                                 <i class="far fa-circle nav-icon"></i>
-                                 <p>
-                                    Sumber Dana
-                                 </p>
-                             </a>
-                         </li>
-                         @endcan
+                         
                      </ul>
                  </li>
+
+                 <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon far fa-circle text-danger"></i>
+                        <p>
+                           Penduduk
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                       @can('penduduk-list')
+                       <li class="nav-item">
+                           <a href="{{ route('penduduk.index') }}" class="nav-link">
+                               <i class="far fa-circle nav-icon"></i>
+                               <p>
+                                   Data Penduduk
+                               </p>
+                           </a>
+                       </li>
+                       @endcan
+                    </ul>
+                </li>
 
                  <li class="nav-item">
                      <a href="#" class="nav-link">
@@ -73,6 +85,16 @@
                          </p>
                      </a>
                      <ul class="nav nav-treeview">
+                        @can('penduduk-list')
+                         <li class="nav-item">
+                             <a href="{{ route('penduduk.index') }}" class="nav-link">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>
+                                    DTKS
+                                 </p>
+                             </a>
+                         </li>
+                         @endcan
                          @can('bidang-list')
                          <li class="nav-item">
                              <a href="{{ route('bidang.index') }}" class="nav-link">
@@ -129,6 +151,16 @@
                                  <i class="far fa-circle nav-icon"></i>
                                  <p>
                                      Pekerjaan
+                                 </p>
+                             </a>
+                         </li>
+                         @endcan
+                         @can('sumber_dana-list')
+                         <li class="nav-item">
+                             <a href="{{ route('sumber_dana.index') }}" class="nav-link">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>
+                                    Sumber Dana
                                  </p>
                              </a>
                          </li>

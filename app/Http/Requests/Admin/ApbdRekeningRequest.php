@@ -24,10 +24,12 @@ class ApbdRekeningRequest extends FormRequest
     public function rules()
     {
         return [
-            'id_rekening' => 'required|integer|exists:rekening,id',
+            'id_sub_bidang' => 'required|integer|exists:sub_bidang,id',
             'id_desa' => 'required|integer|exists:desa,id',
             'id_sumber_dana' => 'required|integer|exists:sumber_dana,id',
             'tahun' => 'required',
+            'kode' => 'required',
+            'uraian' => 'required',
             'anggaran' => 'required',
         ];
     }

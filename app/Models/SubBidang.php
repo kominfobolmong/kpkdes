@@ -12,7 +12,7 @@ class SubBidang extends Model
     public $incrementing = false;
     protected $table = 'sub_bidang';
     protected $fillable = [
-        'id_bidang', 'nama'
+        'id_bidang', 'nama', 'kode'
     ];
 
     protected $hidden = [];

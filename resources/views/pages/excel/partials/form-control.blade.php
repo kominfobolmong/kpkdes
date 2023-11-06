@@ -13,7 +13,7 @@
         </ul>
     </div>
     @endif
-    <div class="form-group">
+    {{-- <div class="form-group">
         <label for="jenis">Data</label>
         <select class="form-control select2" name="id_jenis" style="width: 100%;">
             <option value="" selected disabled>Choose One</option>
@@ -39,7 +39,7 @@
             <option @if(old('jenis')==$arr) selected @endif value="{{ $arr }}">{{ $arr }}</option>
             @endforeach
         </select>
-    </div>
+    </div> --}}
     <div class="form-group">
         <label for="tahun">Tahun</label>
         <input type="text" class="form-control" id="tahun" name="tahun" placeholder="tahun" value="">

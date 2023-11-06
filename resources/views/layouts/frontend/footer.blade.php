@@ -10,5 +10,5 @@
         BOLMONG
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2022 <a href="https://diskominfo.bolmongkab.go.id" class="text-success"> DINAS KOMUNIKASI DAN INFORMATIKA</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2023 <a href="https://diskominfo.bolmongkab.go.id" class="text-success"> KPKDES</a>.</strong> All rights reserved.
 </footer>

@@ -7,6 +7,7 @@ use App\Models\Bidang;
 use App\Models\Desa;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 
 class BidangController extends Controller
@@ -31,8 +32,8 @@ class BidangController extends Controller
     public function getData()
     {
 
-        $items = Bidang::select(['bidang.*', 'desa.nama as desa'])
-            ->leftJoin('desa', 'bidang.id_desa', '=', 'desa.id')
+        $items = Bidang::select(['bidang.*'])
+            // ->leftJoin('desa', 'bidang.id_desa', '=', 'desa.id')
             ->orderBy('bidang.id', 'desc');
 
         return DataTables::of($items)
@@ -113,7 +114,9 @@ class BidangController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->all();
+
         $item = Bidang::findOrFail($id);
+        $data['slug'] = Str::slug($request->nama, '-');
         $item->update($data);
         session()->flash('success', 'Item was updated.');
         return redirect()->route('bidang.index');

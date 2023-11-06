@@ -54,26 +54,29 @@
                         <table class="table table-striped" id="data-table">
                             <thead>
                                 <tr>
-                                    <th>Desa</th>
-                                    <th>Bidang</th>
+                                    <th>Kode</th>
+                                    <th>Bidang/Sub bidang</th>
+                                    <th></th>
                                 </tr>
                                 <tr class="text-bold">
-                                    <td>{{ $item->desa->nama ?? null }}</td>
+                                    <td>{{ $item->kode?? null }}</td>
                                     <td><a href="/admin/bidang" class="text-dark">{{ $item->nama ?? null }}</a></td>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($item->sub_bidang as $sub_bidang)
                                 <tr>
-                                    <td>{{ $item->desa->nama ?? null }}</td>
+                                    <td>{{ $sub_bidang->kode ?? null }}</td>
                                     <td>{{ $sub_bidang->nama ?? null }}</td>
+                                    <th><a href="/admin/sub_bidang/{{ $sub_bidang->id }}/edit" class="btn btn-warning"><i class="fa fa-edit"></i></a></th>
                                 </tr>
                                 @endforeach
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Bidang</th>
-                                    <th>Nama</th>
+                                    <th>Kode</th>
+                                    <th>Bidang/Sub b idang</th>
+                                    <th></th>
                                 </tr>
                             </tfoot>
                         </table>

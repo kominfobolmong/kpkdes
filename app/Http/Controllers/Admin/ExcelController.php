@@ -54,11 +54,7 @@ class ExcelController extends Controller
      */
     public function create()
     {
-        $jeniss = Jenis::all();
-        $opds = Opd::all();
-        $arrs = ['Kemiri', 'Pala', 'Kakao', 'Cingkeh', 'Kop Robusta', 'Kopi Arabica', 'Kelapa Dalam'];
-        // $arrs = ['Padi Sawah', 'Padi Ladang', 'Jagung', 'Kedelai', 'Kacang Tanah', 'Kacang Hijau', 'Ubi Kayu', 'Ubi Jalar'];
-        return view('pages.excel.create', compact('jeniss', 'opds', 'arrs'));
+        return view('pages.excel.create');
     }
 
     /**

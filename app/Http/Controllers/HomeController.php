@@ -6,6 +6,8 @@ use App\Models\Akta;
 use App\Models\Babi;
 use App\Models\BudidayaIkan;
 use App\Models\Daging;
+use App\Models\Desa;
+use App\Models\ItemPekerjaan;
 use App\Models\Jenis;
 use App\Models\JumlahKepalaKeluarga;
 use App\Models\Kecamatan;
@@ -45,35 +47,38 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        // $kecamatans = Kecamatan::get();
-        // $jeniss = Jenis::get();
-        // $item = new Kecamatan();
-        // $penduduks = Penduduk::where(function ($query) use ($item) {
-        //     return $item->id ?
-        //         $query->where('id_kecamatan', $item->id) : '';
-        // })->get();
-        // $aktas = Akta::where(function ($query) use ($item) {
-        //     return $item->id ?
-        //         $query->where('id_kecamatan', $item->id) : '';
-        // })->get();
-        // $kias = Kia::where(function ($query) use ($item) {
-        //     return $item->id ?
-        //         $query->where('id_kecamatan', $item->id) : '';
-        // })->get();
-        // $kks = JumlahKepalaKeluarga::where(function ($query) use ($item) {
-        //     return $item->id ?
-        //         $query->where('id_kecamatan', $item->id) : '';
-        // })->get();
-        // $active = 'kependudukan';
-        // return view('home', compact(
-        //     'kecamatans',
-        //     'jeniss',
-        //     'item',
-        //     'penduduks',
-        //     'aktas',
-        //     'kias',
-        //     'kks',
-        //     'active'
-        // ));
+
+        return view('home');
+    }
+
+    public function pkt(Request $request)
+    {
+
+        $desas = Desa::all();
+        $item = new Desa();
+        if (request('id')) {
+            $item = Desa::findOrFail(request('id'));
+            $items = ItemPekerjaan::where('id_desa', request('id'))->get();
+        } else {
+            $items = ItemPekerjaan::get();
+        }
+        return view('pkt', compact('items', 'desas', 'item'));
+    }
+
+    public function desa(Request $request)
+    {
+        $kecamatans = Kecamatan::all();
+        $item = new Kecamatan();
+        if (request('id')) {
+            $item = Kecamatan::findOrFail(request('id'));
+            $items = Desa::where('id_kecamatan', request('id'))->get();
+        } else {
+            $items = Desa::get();
+        }
+        $tahun = "";
+        if (request('tahun')) {
+            $tahun = request('tahun');
+        }
+        return view('desa', compact('items', 'kecamatans', 'item', 'tahun'));
     }
 }

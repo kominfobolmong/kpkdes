@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ApbdRekeningRequest;
 use App\Models\ApbdRekening;
+use App\Models\Bidang;
 use App\Models\Rekening;
 use App\Models\Desa;
+use App\Models\Kabupaten;
 use App\Models\SumberDana;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
@@ -34,22 +37,31 @@ class ApbdRekeningController extends Controller
 
     public function getData()
     {
-        $items = ApbdRekening::select(['apbd_rekening.*', 'rekening.kode', 'rekening.nama as rekening', 'desa.nama as desa', 'sumber_dana.nama as sumber_dana'])
-            ->join('rekening', 'apbd_rekening.id_rekening', '=', 'rekening.id')
+        $items = ApbdRekening::select(['apbd_rekening.*', 'sub_bidang.nama as sub_bidang', 'bidang.nama as bidang',  'kecamatan.nama as kecamatan', 'desa.nama as desa', 'sumber_dana.nama as sumber_dana'])
+            ->join('sub_bidang', 'apbd_rekening.id_sub_bidang', '=', 'sub_bidang.id')
+            ->join('bidang', 'sub_bidang.id_bidang', '=', 'bidang.id')
             ->join('desa', 'apbd_rekening.id_desa', '=', 'desa.id')
+            ->join('kecamatan', 'desa.id_kecamatan', '=', 'kecamatan.id')
             ->join('sumber_dana', 'apbd_rekening.id_sumber_dana', '=', 'sumber_dana.id')
             ->orderBy('apbd_rekening.id', 'desc');
 
         return DataTables::of($items)
             ->addColumn('action', function ($row) {
                 // $btn = '<button disabled class="btn btn-outline-dark">--</button>';
-                $btn = '<a href="/admin/abpd_rekening/' . $row->id . '/edit" class="btn btn-info"><i class="fas fa-pencil-alt"></i></a> <a href="javascript:void(0)" title="Hapus" onclick="delete_data(' . "'" . $row->id . "'" . ')" class="btn btn-danger"><i class="fas fa-trash"></i></a>';
+                $btn = '<a href="/admin/apbd_rekening/' . $row->id . '/edit" class="btn btn-info"><i class="fas fa-pencil-alt"></i></a> <a href="javascript:void(0)" title="Hapus" onclick="delete_data(' . "'" . $row->id . "'" . ')" class="btn btn-danger"><i class="fas fa-trash"></i></a>';
                 return $btn;
             })
             ->editColumn('created_at', function ($row) {
                 return $row->created_at ? with(new Carbon($row->created_at))->format('m/d/Y') : '';
             })
-            ->rawColumns(['action'])
+            ->editColumn('uraian', function ($row) {
+                return $row->uraian ? '<a href="/admin/item_pekerjaan/' . $row->id . '" class="text-bold text-dark">' . Str::limit($row->uraian, 20) . '</a>' : '';
+            })
+
+            ->editColumn('anggaran', function ($row) {
+                return $row->anggaran ? number_format($row->anggaran) : '';
+            })
+            ->rawColumns(['action', 'uraian'])
             ->make(true);
     }
 
@@ -61,10 +73,10 @@ class ApbdRekeningController extends Controller
     public function create()
     {
         $item = new ApbdRekening();
-        $rekenings = Rekening::get();
-        $desas = Desa::get();
+        $bidangs = Bidang::get();
+        $kabupatens = Kabupaten::get();
         $sumber_danas = SumberDana::get();
-        return view('pages.apbd_rekening.create', compact('item', 'rekenings', 'desas', 'sumber_danas'));
+        return view('pages.apbd_rekening.create', compact('item', 'bidangs', 'kabupatens', 'sumber_danas'));
     }
 
     /**
@@ -100,11 +112,12 @@ class ApbdRekeningController extends Controller
      */
     public function edit($id)
     {
+        // dd($id);
         $item = ApbdRekening::findOrFail($id);
-        $rekenings = Rekening::get();
-        $desas = Desa::get();
+        $bidangs = Bidang::get();
+        $kabupatens = Kabupaten::get();
         $sumber_danas = SumberDana::get();
-        return view('pages.apbd_rekening.edit', compact('item', 'rekenings', 'desa', 'sumber_danas'));
+        return view('pages.apbd_rekening.edit', compact('item', 'bidangs', 'kabupatens', 'sumber_danas'));
     }
 
     /**
@@ -134,5 +147,16 @@ class ApbdRekeningController extends Controller
         $item = ApbdRekening::findOrFail($id);
         $item->delete();
         return response()->json(['success' => 'Item was deleted successfully']);
+    }
+
+    public function getApbdRekening(Request $request)
+    {
+        $items = ApbdRekening::where('id_desa', $request->id)
+            ->where('tahun', $request->tahun)->get();
+        $html = '<option>Choose One</option>';
+        foreach ($items as $item) {
+            $html .= '<option value="' . $item->id . '">' . $item->uraian . '</option>';
+        }
+        echo $html;
     }
 }

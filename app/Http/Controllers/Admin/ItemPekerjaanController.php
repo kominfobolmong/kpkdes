@@ -3,21 +3,23 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\SubBidang;
-use App\Models\Bidang;
+use App\Models\Rekening;
+use App\Models\ItemPekerjaan;
+use App\Http\Requests\ItemPekerjaanRequest;
+use App\Models\ApbdRekening;
 use Carbon\Carbon;
-use App\Http\Requests\SubBidangRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 
-class SubBidangController extends Controller
+class ItemPekerjaanController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:sub_bidang-list|sub_bidang-create|sub_bidang-edit|sub_bidang-delete', ['only' => ['index', 'store']]);
-        $this->middleware('permission:sub_bidang-create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:sub_bidang-edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:sub_bidang-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:item_pekerjaan-list|item_pekerjaan-create|item_pekerjaan-edit|item_pekerjaan-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:item_pekerjaan-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:item_pekerjaan-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:item_pekerjaan-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -26,21 +28,23 @@ class SubBidangController extends Controller
      */
     public function index()
     {
-        return view('pages.sub_bidang.index');
+        return view('pages.item_pekerjaan.index');
     }
 
     public function getData()
     {
 
-        $items = SubBidang::select(['sub_bidang.*', 'bidang.nama as bidang', 'desa.nama as desa'])
-            ->join('bidang', 'sub_bidang.id_bidang', '=', 'bidang.id')
-            ->join('desa', 'bidang.id_desa', '=', 'desa.id')
-            ->orderBy('sub_bidang.id', 'desc');
+        $items = ItemPekerjaan::select([
+            'item_pekerjaan.*', 'apbd_rekening.uraian', 'kecamatan.nama as kecamatan',
+            'desa.nama as desa', 'apbd_rekening.kode'
+        ])
+            ->join('rekening', 'item_pekerjaan.id_rekening', '=', 'rekening.id')
+            ->orderBy('item_pekerjaan.id', 'desc');
 
         return DataTables::of($items)
             ->addColumn('action', function ($row) {
                 // $btn = '';
-                $btn = '<a href="/admin/sub_bidang/' . $row->id . '/edit" class="btn btn-info"><i class="fas fa-pencil-alt"></i></a> ';
+                $btn = '<a href="/admin/item_pekerjaan/' . $row->id . '/edit" class="btn btn-info"><i class="fas fa-pencil-alt"></i></a> ';
                 $btn .= '<a href="javascript:void(0)" title="Hapus" onclick="delete_data(' . "'" . $row->id . "'" . ')" class="btn btn-danger"><i class="fas fa-trash"></i></a>';
                 return $btn;
             })
@@ -58,13 +62,12 @@ class SubBidangController extends Controller
      */
     public function create()
     {
-        $bidang = new Bidang();
-        if (request('id_bidang')) {
-            $bidang = Bidang::findOrFail(request('id_bidang'));
+        $apbd_rekening = new ApbdRekening();
+        if (request('id_apbd_rekening')) {
+            $apbd_rekening = ApbdRekening::findOrFail(request('id_apbd_rekening'));
         }
-        $item = new SubBidang();
-        $bidangs = Bidang::get();
-        return view('pages.sub_bidang.create', compact('item', 'bidangs', 'bidang'));
+        $item = new ItemPekerjaan();
+        return view('pages.item_pekerjaan.create', compact('item', 'apbd_rekening'));
     }
 
     /**
@@ -73,12 +76,12 @@ class SubBidangController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SubBidangRequest $request)
+    public function store(ItemPekerjaanRequest $request)
     {
         $data = $request->all();
-        SubBidang::create($data);
+        ItemPekerjaan::create($data);
         session()->flash('success', 'Item was created.');
-        return redirect('admin/sub_bidang/' . $data['id_bidang']);
+        return redirect('admin/item_pekerjaan/' . $data['id_apbd_rekening']);
     }
 
     /**
@@ -89,8 +92,8 @@ class SubBidangController extends Controller
      */
     public function show($id)
     {
-        $item = Bidang::findOrFail($id);
-        return view('pages.sub_bidang.show', compact('item'));
+        $item = ApbdRekening::findOrFail($id);
+        return view('pages.item_pekerjaan.show', compact('item'));
     }
 
     /**
@@ -101,11 +104,9 @@ class SubBidangController extends Controller
      */
     public function edit($id)
     {
-
-        $item = SubBidang::findOrFail($id);
-        $bidang = Bidang::findOrFail($item->id_bidang);
-        $bidangs = Bidang::get();
-        return view('pages.sub_bidang.edit', compact('item', 'bidangs', 'bidang'));
+        $item = ItemPekerjaan::findOrFail($id);
+        $apbd_rekening = ApbdRekening::findOrFail($item->id_apbd_rekening);
+        return view('pages.item_pekerjaan.edit', compact('item', 'apbd_rekening'));
     }
 
     /**
@@ -115,13 +116,13 @@ class SubBidangController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(SubBidangRequest $request, $id)
+    public function update(ItemPekerjaanRequest $request, $id)
     {
         $data = $request->all();
-        $item = SubBidang::findOrFail($id);
+        $item = ItemPekerjaan::findOrFail($id);
         $item->update($data);
         session()->flash('success', 'Item was updated.');
-        return redirect('/admin/sub_bidang/' . $item->id_bidang);
+        return redirect('/admin/item_pekerjaan/' . $data['id_apbd_rekening']);
     }
 
     /**
@@ -132,14 +133,14 @@ class SubBidangController extends Controller
      */
     public function destroy($id)
     {
-        $item = SubBidang::findOrFail($id);
+        $item = ItemPekerjaan::findOrFail($id);
         $item->delete();
         return response()->json(['success' => 'Item was deleted successfully']);
     }
 
     public function getList($id)
     {
-        $items = SubBidang::where('id_bidang', $id)->get();
+        $items = ItemPekerjaan::where('id_apbd_rekening', $id)->get();
         $html = '<option>Choose One</option>';
         foreach ($items as $item) {
             $html .= '<option value="' . $item->id . '">' . $item->kode . ' ' . $item->nama . '</option>';

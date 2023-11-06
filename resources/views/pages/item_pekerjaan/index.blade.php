@@ -6,23 +6,35 @@
             processing: true,
             serverSide: true,
             autoWidth: false,
-            ajax: '/admin/rekening/get_data/',
+            ajax: '/admin/item_pekerjaan/get_data/',
             columns: [{
                     data: 'id',
-                    name: 'rekening.id',
+                    name: 'item_pekerjaan.id',
                     visible: false
                 },
                 {
                     data: 'created_at',
-                    name: 'rekening.created_at'
+                    name: 'item_pekerjaan.created_at'
+                },
+                {
+                    data: 'kecamatan',
+                    name: 'kecamatan.nama'
+                },
+                {
+                    data: 'desa',
+                    name: 'desa.nama'
                 },
                 {
                     data: 'kode',
-                    name: 'rekening.kode'
+                    name: 'apbd_rekening.kode'
+                },
+                {
+                    data: 'uraian',
+                    name: 'apbd_rekening.uraian'
                 },
                 {
                     data: 'nama',
-                    name: 'rekening.nama'
+                    name: 'item_pekerjaan.nama'
                 },
                 {
                     data: 'action',
@@ -39,7 +51,7 @@
         if (confirm('Are you sure delete this  data?')) {
 
             $.ajax({
-                url: "/admin/rekening/" + id,
+                url: "/admin/item_pekerjaan/" + id,
                 type: "DELETE",
                 data: {
                     "_token": "{{ csrf_token() }}",
@@ -63,10 +75,10 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Rekening</h3>
+                        <h3 class="card-title">Item Pekerjaan</h3>
                         <div class="card-tools">
-                            @can('rekening-create')
-                            <a href="{{ route('rekening.create') }}" class="btn btn-primary">
+                            @can('item_pekerjaan-create')
+                            <a href="{{ route('item_pekerjaan.create') }}" class="btn btn-primary">
                                 <i class="fas fa-plus"></i> Create
                             </a>
                             @endcan
@@ -85,8 +97,11 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Tanggal Entri</th>
+                                    <th>Kecamatan</th>
+                                    <th>Desa</th>
                                     <th>Kode</th>
-                                    <th>Nama</th>
+                                    <th>Uraian</th>
+                                    <th>Item Pekerjaan</th>
                                     <th>--</th>
                                 </tr>
                             </thead>
@@ -97,8 +112,11 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Tanggal Entri</th>
+                                    <th>Kecamatan</th>
+                                    <th>Desa</th>
                                     <th>Kode</th>
-                                    <th>Nama</th>
+                                    <th>Uraian</th>
+                                    <th>Item Pekerjaan</th>
                                     <th>--</th>
                                 </tr>
                             </tfoot>

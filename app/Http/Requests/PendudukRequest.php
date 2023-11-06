@@ -27,10 +27,10 @@ class PendudukRequest extends FormRequest
             'id_pekerjaan' => 'required|integer|exists:pekerjaan,id',
             'id_hubungan' => 'required|integer|exists:hubungan,id',
             'id_desa' => 'required|integer|exists:desa,id',
-            'laki_laki' => 'required',
-            'perempuan' => 'required',
-            'jumlah' => 'required',
-            'tahun' => 'required',
+            'nik' => 'required',
+            'nama' => 'required',
+            'no_kk' => 'required',
+            'nama_ibu_kandung' => 'required',
         ];
     }
 }

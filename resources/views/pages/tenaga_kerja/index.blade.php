@@ -6,15 +6,15 @@
             processing: true,
             serverSide: true,
             autoWidth: false,
-            ajax: '/admin/apbd_rekening/get_data',
+            ajax: '/admin/tenaga_kerja/get_data',
             columns: [{
                     data: 'id',
-                    name: 'apbd_rekening.id',
+                    name: 'tenaga_kerja.id',
                     visible: false
                 },
                 {
                     data: 'created_at',
-                    name: 'apbd_rekening.created_at'
+                    name: 'tenaga_kerja.created_at'
                 },
                 {
                     data: 'kecamatan',
@@ -29,16 +29,12 @@
                     name: 'apbd_rekening.tahun'
                 },
                 {
-                    data: 'kode',
-                    name: 'apbd_rekening.kode'
+                    data: 'item_pekerjaan',
+                    name: 'item_pekerjaan.nama'
                 },
                 {
-                    data: 'uraian',
-                    name: 'apbd_rekening.uraian'
-                },
-                {
-                    data: 'anggaran',
-                    name: 'apbd_rekening.anggaran'
+                    data: 'penduduk',
+                    name: 'penduduk.nama'
                 },
                 {
                     data: 'action',
@@ -55,7 +51,7 @@
         if (confirm('Are you sure delete this  data?')) {
 
             $.ajax({
-                url: "/admin/apbd_rekening/" + id,
+                url: "/admin/tenaga_kerja/" + id,
                 type: "DELETE",
                 data: {
                     "_token": "{{ csrf_token() }}",
@@ -79,10 +75,10 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">APBD</h3>
+                        <h3 class="card-title">Tenaga Kerja</h3>
                         <div class="card-tools">
-                            @can('apbd_rekening-create')
-                            <a href="{{ route('apbd_rekening.create') }}" class="btn btn-primary">
+                            @can('tenaga_kerja-create')
+                            <a href="{{ route('tenaga_kerja.create') }}" class="btn btn-primary">
                                 <i class="fas fa-plus"></i> Create
                             </a>
                             @endcan
@@ -96,37 +92,37 @@
                             {{ session()->get('success') }}
                         </div>
                         @endif
-                        <table class="table table-striped" id="data-table">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Tanggal Entri</th>
-                                    <th>Kecamatan</th>
-                                    <th>Desa/Kelurahan</th>
-                                    <th>Tahun</th>
-                                    <th>Kode</th>
-                                    <th>Uraian</th>
-                                    <th>Anggaran</th>
-                                    <th>--</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Tanggal Entri</th>
-                                    <th>Kecamatan</th>
-                                    <th>Desa/Kelurahan</th>
-                                    <th>Tahun</th>
-                                    <th>Kode</th>
-                                    <th>Uraian</th>
-                                    <th>Anggaran</th>
-                                    <th>--</th>
-                                </tr>
-                            </tfoot>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Tanggal Entri</th>
+                                        <th>Kecamatan</th>
+                                        <th>Desa/Kelurahan</th>
+                                        <th>Tahun</th>
+                                        <th>Uraian</th>
+                                        <th>Tenaga Kerja</th>
+                                        <th>--</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+    
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Tanggal Entri</th>
+                                        <th>Kecamatan</th>
+                                        <th>Desa/Kelurahan</th>
+                                        <th>Tahun</th>
+                                        <th>Uraian</th>
+                                        <th>Tenaga Kerja</th>
+                                        <th>--</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer clearfix">

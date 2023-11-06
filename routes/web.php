@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Admin\ApbdRekeningController;
 use App\Http\Controllers\Admin\SubBidangController;
-use App\Http\Controllers\Admin\ApbdSubRekeningController;
+use App\Http\Controllers\Admin\TenagaKerjaController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ExcelController;
 use App\Http\Controllers\Admin\OpdController;
@@ -25,7 +25,7 @@ use App\Http\Controllers\Admin\WaktuController;
 use App\Http\Controllers\Admin\PendudukController;
 use App\Http\Controllers\Admin\PuskesmasController;
 use App\Http\Controllers\Admin\SekolahController;
-use App\Http\Controllers\Admin\SubRekeningController;
+use App\Http\Controllers\Admin\ItemPekerjaanController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -44,23 +44,31 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/pkt/{id?}', [HomeController::class, 'pkt'])->name('home');
+Route::get('/desa/{id?}/{tahun?}', [HomeController::class, 'desa'])->name('home');
 
 Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('kecamatan/get_data/', [KecamatanController::class, 'getData']);
+    Route::get('kecamatan/get_list_kecamatan/{id}', [KecamatanController::class, 'getList']);
     Route::get('penduduk/get_data/', [KecamatanController::class, 'getData']);
     Route::get('apbd_rekening/get_data/', [ApbdRekeningController::class, 'getData']);
-    Route::get('apbd_sub_rekening/get_data/', [ApbdSubRekeningController::class, 'getData']);
+    Route::get('apbd_rekening/get_apbd_rekening/{id}/{tahun}', [ApbdRekeningController::class, 'getApbdRekening']);
+    Route::get('tenaga_kerja/get_data/', [TenagaKerjaController::class, 'getData']);
     Route::get('bidang/get_data/', [BidangController::class, 'getData']);
     Route::get('desa/get_data/', [DesaController::class, 'getData']);
+    Route::get('desa/get_list_desa/{id}', [DesaController::class, 'getList']);
     Route::get('hubungan/get_data/', [HubunganController::class, 'getData']);
     Route::get('kabupaten/get_data/', [KabupatenController::class, 'getData']);
-    Route::get('penduduk/get_data/', [KecamatanController::class, 'getData']);
+    Route::get('penduduk/get_data/', [PendudukController::class, 'getData']);
+    Route::get('penduduk/get_penduduk/{id}', [PendudukController::class, 'getPenduduk']);
     Route::get('pekerjaan/get_data/', [PekerjaanController::class, 'getData']);
     Route::get('rekening/get_data/', [RekeningController::class, 'getData']);
     Route::get('sub_bidang/get_data/', [SubBidangController::class, 'getData']);
-    Route::get('sub_rekening/get_data/', [SubRekeningController::class, 'getData']);
+    Route::get('sub_bidang/get_list_sub_bidang/{id}', [SubBidangController::class, 'getList']);
+    Route::get('item_pekerjaan/get_data/', [ItemPekerjaanController::class, 'getData']);
+    Route::get('item_pekerjaan/get_list_item_pekerjaan/{id}', [ItemPekerjaanController::class, 'getList']);
     Route::get('sumber_dana/get_data/', [SumberDanaController::class, 'getData']);
 
     Route::resource('user', UserController::class);
@@ -68,7 +76,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::resource('excel', ExcelController::class);
 
     Route::resource('apbd_rekening', ApbdRekeningController::class);
-    Route::resource('apbd_sub_rekening', ApbdSubRekeningController::class);
+    Route::resource('tenaga_kerja', TenagaKerjaController::class);
     Route::resource('bidang', BidangController::class);
     Route::resource('desa', DesaController::class);
     Route::resource('hubungan', HubunganController::class);
@@ -78,6 +86,6 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::resource('penduduk', PendudukController::class);
     Route::resource('rekening', RekeningController::class);
     Route::resource('sub_bidang', SubBidangController::class);
-    Route::resource('sub_rekening', SubRekeningController::class);
+    Route::resource('item_pekerjaan', ItemPekerjaanController::class);
     Route::resource('sumber_dana', SumberDanaController::class);
 });

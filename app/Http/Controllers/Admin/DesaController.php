@@ -129,4 +129,14 @@ class DesaController extends Controller
         $item->delete();
         return response()->json(['success' => 'Item was deleted successfully']);
     }
+
+    public function getList($id)
+    {
+        $items = Desa::where('id_kecamatan', $id)->get();
+        $html = '<option>Choose One</option>';
+        foreach ($items as $item) {
+            $html .= '<option value="' . $item->id . '">' . $item->nama . '</option>';
+        }
+        echo $html;
+    }
 }
