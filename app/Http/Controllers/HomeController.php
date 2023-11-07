@@ -24,6 +24,7 @@ use App\Models\Pertanian;
 use App\Models\Puskesmas;
 use App\Models\RekapitulasiPendidik;
 use App\Models\Sekolah;
+use App\Models\TenagaKerja;
 use App\Models\Unggas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -80,5 +81,22 @@ class HomeController extends Controller
             $tahun = request('tahun');
         }
         return view('desa', compact('items', 'kecamatans', 'item', 'tahun'));
+    }
+
+    public function getGrafikPkt()
+    {
+        $items = ItemPekerjaan::selectRaw('desa.nama as desa, count(item_pekerjaan.id) as jml')
+            ->join('desa', 'item_pekerjaan.id_desa', '=', 'desa.id')
+            ->groupBy('item_pekerjaan.id_desa')
+            ->get();
+        return response()->json(['result' => $items]);
+    }
+    public function getGrafikTenagaKerja()
+    {
+        $items = TenagaKerja::selectRaw('desa.nama as desa, count(tenaga_kerja.id) as jml')
+            ->join('desa', 'tenaga_kerja.id_desa', '=', 'desa.id')
+            ->groupBy('tenaga_kerja.id_desa')
+            ->get();
+        return response()->json(['result' => $items]);
     }
 }

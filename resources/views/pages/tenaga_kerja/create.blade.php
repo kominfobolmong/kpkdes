@@ -102,7 +102,7 @@
                 dataType: "json",
                 success: function(response) {
                     if (response.status) {
-                        alert('Sukses')
+                        alert('Sukses! Pilih lagi')
                         // window.location.href = '/admin/invoice/' + id_invoice + '/print';
                     } else {
                         for (var key in response.error) {
@@ -118,6 +118,35 @@
                     console.log(response_error);
                 }
             });
+        });
+
+        $(document).on('change', '.ambil_data', function() {
+            var val = '{{ auth()->user()->desa[0]->id ?? null }}';
+            var tahun = $('[name=tahun]').val();
+
+            if(tahun == "") {
+                alert('Isi tahun terlebih dahulu');
+            } else {
+                $.ajax({
+                    url: '/admin/apbd_rekening/get_apbd_rekening/' + val + '/' + tahun,
+                    type: "GET",
+                    dataType: "text",
+                    success: function(response) {
+                        $("[name=id_apbd_rekening]").html(response);
+                    }
+                });
+
+                $.ajax({
+                    url: '/admin/penduduk/get_penduduk/' + val,
+                    type: "GET",
+                    dataType: "text",
+                    success: function(response) {
+                        $("[name=id_penduduk]").html(response);
+                    }
+                });
+            }
+
+            
         });
 
     });

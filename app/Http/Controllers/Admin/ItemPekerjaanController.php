@@ -9,6 +9,7 @@ use App\Http\Requests\ItemPekerjaanRequest;
 use App\Models\ApbdRekening;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 
@@ -34,11 +35,16 @@ class ItemPekerjaanController extends Controller
     public function getData()
     {
 
-        $items = ItemPekerjaan::select([
-            'item_pekerjaan.*', 'apbd_rekening.uraian', 'kecamatan.nama as kecamatan',
-            'desa.nama as desa', 'apbd_rekening.kode'
-        ])
-            ->join('rekening', 'item_pekerjaan.id_rekening', '=', 'rekening.id')
+        auth()->user()->hasRole(['Admin']) ?
+            $items = ItemPekerjaan::select([
+                'item_pekerjaan.*', 'apbd_rekening.uraian', 'kecamatan.nama as kecamatan',
+                'desa.nama as desa', 'apbd_rekening.kode'
+            ])->join('rekening', 'item_pekerjaan.id_rekening', '=', 'rekening.id')
+            ->orderBy('item_pekerjaan.id', 'desc') : $items = ItemPekerjaan::select([
+                'item_pekerjaan.*', 'apbd_rekening.uraian', 'kecamatan.nama as kecamatan',
+                'desa.nama as desa', 'apbd_rekening.kode'
+            ])->join('rekening', 'item_pekerjaan.id_rekening', '=', 'rekening.id')
+            ->where('item_pekerjaan.id_desa', auth()->user()->desa[0]->id)
             ->orderBy('item_pekerjaan.id', 'desc');
 
         return DataTables::of($items)

@@ -28,7 +28,7 @@ class UserRequest extends FormRequest
             'email' => 'sometimes|email|unique:users,email',
             'password' => 'sometimes|string|min:8',
             'roles' => 'required',
-            'id_opd' => 'required|array'
+            'id_desa' => 'required|array'
         ];
     }
 }

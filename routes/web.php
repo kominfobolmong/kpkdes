@@ -44,8 +44,10 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/pkt/{id?}', [HomeController::class, 'pkt'])->name('home');
-Route::get('/desa/{id?}/{tahun?}', [HomeController::class, 'desa'])->name('home');
+Route::get('/pkt/{id?}', [HomeController::class, 'pkt']);
+Route::get('/desa/{id?}/{tahun?}', [HomeController::class, 'desa']);
+Route::get('/get_grafik_pkt', [HomeController::class, 'getGrafikPkt'])->name('get_grafik_pkt');
+Route::get('/get_grafik_tenaga_kerja', [HomeController::class, 'getGrafikTenagaKerja'])->name('get_grafik_tenaga_kerja');
 
 Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');

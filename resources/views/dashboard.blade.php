@@ -21,7 +21,8 @@
                 <div class="card">
                     <div class="card-header">KPKDES</div>
                     <div class="card-body">
-
+Welcome {{ auth()->user()->name }}
+{{-- {{  auth()->user()->desa[0]->id }} --}}
                     </div>
                 </div>
             </div>

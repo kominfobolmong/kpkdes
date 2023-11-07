@@ -24,4 +24,9 @@ class ItemPekerjaan extends Model
     {
         return $this->belongsTo(Desa::class, 'id_desa', 'id');
     }
+
+    public function tenaga_kerja()
+    {
+        return $this->hasMany(TenagaKerja::class, 'id_item_pekerjaan', 'id');
+    }
 }

@@ -38,11 +38,18 @@ class TenagaKerjaController extends Controller
 
     public function getData()
     {
-        $items = TenagaKerja::select(['tenaga_kerja.*', 'item_pekerjaan.nama as item_pekerjaan', 'penduduk.nama as penduduk', 'desa.nama as desa', 'kecamatan.nama as kecamatan'])
+        auth()->user()->hasRole(['Admin']) ?
+            $items = TenagaKerja::select(['tenaga_kerja.*', 'item_pekerjaan.nama as item_pekerjaan', 'penduduk.nama as penduduk', 'desa.nama as desa', 'kecamatan.nama as kecamatan'])
             ->join('item_pekerjaan', 'tenaga_kerja.id_item_pekerjaan', '=', 'item_pekerjaan.id')
             ->join('desa', 'tenaga_kerja.id_desa', '=', 'desa.id')
             ->join('kecamatan', 'desa.id_kecamatan', '=', 'kecamatan.id')
             ->join('penduduk', 'tenaga_kerja.id_penduduk', '=', 'penduduk.id')
+            ->orderBy('tenaga_kerja.id', 'desc') : $items = TenagaKerja::select(['tenaga_kerja.*', 'item_pekerjaan.nama as item_pekerjaan', 'penduduk.nama as penduduk', 'desa.nama as desa', 'kecamatan.nama as kecamatan'])
+            ->join('item_pekerjaan', 'tenaga_kerja.id_item_pekerjaan', '=', 'item_pekerjaan.id')
+            ->join('desa', 'tenaga_kerja.id_desa', '=', 'desa.id')
+            ->join('kecamatan', 'desa.id_kecamatan', '=', 'kecamatan.id')
+            ->join('penduduk', 'tenaga_kerja.id_penduduk', '=', 'penduduk.id')
+            ->where('tenaga_kerja.id_desa', auth()->user()->desa[0]->id)
             ->orderBy('tenaga_kerja.id', 'desc');
 
         return DataTables::of($items)

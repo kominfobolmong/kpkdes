@@ -67,7 +67,7 @@ class UserController extends Controller
         }
         $user = User::create($data);
         $user->assignRole($request->input('roles'));
-        $user->desa()->attach($request->id_opd);
+        $user->desa()->attach($request->id_desa);
         session()->flash('success', 'User was created.');
         return redirect()->route('user.create');
     }
@@ -127,7 +127,7 @@ class UserController extends Controller
         DB::table('model_has_roles')->where('model_id', $id)->delete();
 
         $item->assignRole($request->input('roles'));
-        $item->desa()->sync($request->id_opd);
+        $item->desa()->sync($request->id_desa);
         session()->flash('success', 'User was updated.');
         return back()->withInput();
     }

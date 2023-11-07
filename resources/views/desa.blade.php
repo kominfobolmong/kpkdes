@@ -58,8 +58,9 @@
                     <thead>
                         <tr>
                             <th>Kecamatan</th>
-                            <th>Desa</th>
-                            <th>PKT</th>
+                            <th>Desa/Kelurahan</th>
+                            <th>Jumlah<br />PKT</th>
+                            <th>--</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -68,6 +69,7 @@
                             <td>{{ $item->kecamatan->nama ?? null }}</td>
                             <td>{{ $item->nama ?? null }}</td>
                             <td>{{ $item->pkt($tahun) ?? 0 }}</td>
+                            <td><a href="/pkt/{{ $item->id }}" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
                         </tr>
                     @endforeach
                     </tbody>

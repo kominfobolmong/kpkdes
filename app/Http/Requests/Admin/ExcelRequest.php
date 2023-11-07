@@ -24,8 +24,7 @@ class ExcelRequest extends FormRequest
     public function rules()
     {
         return [
-            'id_jenis' => 'required|integer|exists:jenis,id',
-            'tahun' => 'required|integer',
+            'id_desa' => 'required|integer|exists:desa,id',
             'excel_file' => 'required|mimes:csv,xls,xlsx'
         ];
     }

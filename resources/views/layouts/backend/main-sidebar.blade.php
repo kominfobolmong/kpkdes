@@ -10,7 +10,7 @@
          <!-- Sidebar user panel (optional) -->
          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
              <div class="image">
-                 <img src="{{ auth()->user()->gravatar() }}" class="img-circle elevation-2" alt="User Image">
+                 <img src="/logo.png" class="elevation-2" alt="User Image">
              </div>
              <div class="info">
                  <a href="{{ route('user.edit', auth()->user()->id) }}" class="d-block">{{ auth()->user()->name }}</a>
@@ -24,6 +24,7 @@
                with font-awesome or any other icon font library -->
 
                  <!-- PARIWISATA -->
+                 @canany('apbd_rekening-list', 'tenaga_kerja-list')
                  <li class="nav-item">
                      <a href="#" class="nav-link">
                          <i class="nav-icon far fa-circle text-danger"></i>
@@ -32,6 +33,7 @@
                          </p>
                      </a>
                      <ul class="nav nav-treeview">
+
                         @can('apbd_rekening-list')
                         <li class="nav-item">
                             <a href="{{ route('apbd_rekening.index') }}" class="nav-link">
@@ -42,25 +44,28 @@
                             </a>
                         </li>
                         @endcan
-                         @can('tenaga_kerja-list')
-                         <li class="nav-item">
+
+                        @can('tenaga_kerja-list')
+                        <li class="nav-item">
                              <a href="{{ route('tenaga_kerja.index') }}" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
                                  <p>
                                     Pekerja/Tenaga Kerja
                                  </p>
                              </a>
-                         </li>
-                         @endcan
+                        </li>
+                        @endcan
                          
                      </ul>
                  </li>
+                @endcanany
 
+                @canany('penduduk-list')
                  <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon far fa-circle text-danger"></i>
                         <p>
-                           Penduduk
+                           DTKS
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
@@ -69,14 +74,16 @@
                            <a href="{{ route('penduduk.index') }}" class="nav-link">
                                <i class="far fa-circle nav-icon"></i>
                                <p>
-                                   Data Penduduk
+                                   DTKS
                                </p>
                            </a>
                        </li>
                        @endcan
                     </ul>
                 </li>
+                @endcanany
 
+                @canany('bidang-list', 'desa-list', 'hubungan-list', 'kabupaten-list', 'kecamatan-list', 'pekerjaan-list', 'sumber_dana-list')
                  <li class="nav-item">
                      <a href="#" class="nav-link">
                          <i class="nav-icon far fa-circle text-danger"></i>
@@ -85,16 +92,7 @@
                          </p>
                      </a>
                      <ul class="nav nav-treeview">
-                        @can('penduduk-list')
-                         <li class="nav-item">
-                             <a href="{{ route('penduduk.index') }}" class="nav-link">
-                                 <i class="far fa-circle nav-icon"></i>
-                                 <p>
-                                    DTKS
-                                 </p>
-                             </a>
-                         </li>
-                         @endcan
+                        
                          @can('bidang-list')
                          <li class="nav-item">
                              <a href="{{ route('bidang.index') }}" class="nav-link">
@@ -105,6 +103,7 @@
                              </a>
                          </li>
                          @endcan
+
                          @can('desa-list')
                          <li class="nav-item">
                              <a href="{{ route('desa.index') }}" class="nav-link">
@@ -115,6 +114,7 @@
                              </a>
                          </li>
                          @endcan
+
                          @can('hubungan-list')
                          <li class="nav-item">
                              <a href="{{ route('hubungan.index') }}" class="nav-link">
@@ -125,6 +125,7 @@
                              </a>
                          </li>
                          @endcan
+
                          @can('kabupaten-list')
                          <li class="nav-item">
                              <a href="{{ route('kabupaten.index') }}" class="nav-link">
@@ -135,6 +136,7 @@
                              </a>
                          </li>
                          @endcan
+
                          @can('kecamatan-list')
                          <li class="nav-item">
                              <a href="{{ route('kecamatan.index') }}" class="nav-link">
@@ -145,6 +147,7 @@
                              </a>
                          </li>
                          @endcan
+
                          @can('pekerjaan-list')
                          <li class="nav-item">
                              <a href="{{ route('pekerjaan.index') }}" class="nav-link">
@@ -155,6 +158,7 @@
                              </a>
                          </li>
                          @endcan
+
                          @can('sumber_dana-list')
                          <li class="nav-item">
                              <a href="{{ route('sumber_dana.index') }}" class="nav-link">
@@ -165,9 +169,15 @@
                              </a>
                          </li>
                          @endcan
+
                      </ul>
                  </li>
+                @endcanany
 
+                {{-- @@canany(['update', 'view', 'delete'], $post) --}}
+                    
+                @endcanany
+                 @canany('role-list', 'user-list')
                  <li class="nav-item">
                      <a href="#" class="nav-link">
                          <i class="nav-icon far fa-circle text-danger"></i>
@@ -176,6 +186,7 @@
                          </p>
                      </a>
                      <ul class="nav nav-treeview">
+
                          @can('role-list')
                          <li class="nav-item">
                              <a href="{{ route('roles.index') }}" class="nav-link">
@@ -186,6 +197,7 @@
                              </a>
                          </li>
                          @endcan
+
                          @can('user-list')
                          <li class="nav-item">
                              <a href="{{ route('user.index') }}" class="nav-link">
@@ -196,9 +208,12 @@
                              </a>
                          </li>
                          @endcan
+
                      </ul>
                  </li>
-                 @endif
+                 @endcanany
+
+                @canany('import-excel')
                  <li class="nav-item">
                      <a href="{{ route('excel.create') }}" class="nav-link">
                          <i class="nav-icon fas fa-sign-out-alt text-danger"></i>
@@ -208,6 +223,8 @@
                      </a>
 
                  </li>
+                @endcanany
+
                  <li class="nav-item">
                      <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                          <i class="nav-icon fas fa-sign-out-alt text-danger"></i>

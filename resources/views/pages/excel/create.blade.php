@@ -1,4 +1,16 @@
 @extends('layouts.backend.app')
+@push('addon-script')
+<script>
+    $(function() {
+        bsCustomFileInput.init();
+        $('.select2').select2();
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        });
+    });
+</script>
+@endpush
 @section('content')
 <section class="content">
     <div class="container-fluid">

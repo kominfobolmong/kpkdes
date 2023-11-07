@@ -4,66 +4,100 @@
 <script>
 
     $(function() {
-        var donutData = {
-            labels: [
-                'Amertha Sari',
-                'Langgagon I',
-                'Mogoyunggung',
-                'Nanasi Timur',
-                'Nonapan I',
-                'Pinobatuan Barat',
-            ],
-            datasets: [
-                {
-                data: [700,500,400,600,300,100],
-                backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
-                }
-            ]
-        }
+        getPkt();
 
-        var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-        var pieData = donutData;
-        var pieOptions = {
-            maintainAspectRatio : false,
-            responsive : true,
-        }
-
-        new Chart(pieChartCanvas, {
-            type: 'pie',
-            data: pieData,
-            options: pieOptions
-        })
-
-        var donutData2 = {
-            labels: [
-                'Amertha Sari',
-                'Langgagon I',
-                'Mogoyunggung',
-                'Nanasi Timur',
-                'Nonapan I',
-                'Pinobatuan Barat',
-            ],
-            datasets: [
-                {
-                data: [350,275,222,88,23,44],
-                backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
-                }
-            ]
-        }
-
-        var pieChartCanvas2 = $('#pieChart2').get(0).getContext('2d')
-        var pieData2 = donutData2;
-        var pieOptions2 = {
-            maintainAspectRatio : false,
-            responsive : true,
-        }
-
-        new Chart(pieChartCanvas2, {
-            type: 'pie',
-            data: pieData2,
-            options: pieOptions2
-        })
+        getTk();
     })
+
+    function getPkt() {
+        $.ajax({
+            url: "/get_grafik_pkt",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response) {
+                var labels = [];
+                var data = [];
+                var backgroundColor = ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'];
+                
+                $.each(response.result, function(k, v) {
+                    labels.push(v.desa);
+                    data.push(v.jml);
+                    console.log(`${v.desa} ${v.jml}`);
+                });
+
+                var donutData = {
+                    labels: labels,
+                    datasets: [
+                        {
+                        data: data,
+                        backgroundColor : backgroundColor,
+                        }
+                    ]
+                }
+
+                var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+                var pieData = donutData;
+                var pieOptions = {
+                    maintainAspectRatio : false,
+                    responsive : true,
+                }
+
+                new Chart(pieChartCanvas, {
+                    type: 'pie',
+                    data: pieData,
+                    options: pieOptions
+                })
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(`${errorThrown}`)
+            }
+        });
+    }
+
+    function getTk() {
+        $.ajax({
+            url: "/get_grafik_tenaga_kerja",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response) {
+                var labels = [];
+                var data = [];
+                var backgroundColor = ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'];
+                
+                $.each(response.result, function(k, v) {
+                    labels.push(v.desa);
+                    data.push(v.jml);
+                    console.log(`${v.desa} ${v.jml}`);
+                });
+
+                var donutData = {
+                    labels: labels,
+                    datasets: [
+                        {
+                        data: data,
+                        backgroundColor : backgroundColor,
+                        }
+                    ]
+                }
+
+                var pieChartCanvas = $('#pieChart2').get(0).getContext('2d')
+                var pieData = donutData;
+                var pieOptions = {
+                    maintainAspectRatio : false,
+                    responsive : true,
+                }
+
+                new Chart(pieChartCanvas, {
+                    type: 'pie',
+                    data: pieData,
+                    options: pieOptions
+                })
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(`${errorThrown}`)
+            }
+        });
+    }
 </script>
 @endpush
 @section('content')

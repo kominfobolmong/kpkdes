@@ -35,17 +35,23 @@ class PendudukController extends Controller
     public function getData()
     {
 
-        $items = Penduduk::select('penduduk.*', 'desa.nama as desa', 'kecamatan.nama as kecamatan', 'kabupaten.nama as kabupaten')
+        auth()->user()->hasRole(['Admin']) ?
+            $items = Penduduk::select('penduduk.*', 'desa.nama as desa', 'kecamatan.nama as kecamatan', 'kabupaten.nama as kabupaten')
             ->join('desa', 'penduduk.id_desa', '=', 'desa.id')
             ->join('kecamatan', 'desa.id_kecamatan', '=', 'kecamatan.id')
             ->join('kabupaten', 'kecamatan.id_kabupaten', '=', 'kabupaten.id')
+            ->orderBy('penduduk.id', 'desc') : $items = Penduduk::select('penduduk.*', 'desa.nama as desa', 'kecamatan.nama as kecamatan', 'kabupaten.nama as kabupaten')
+            ->join('desa', 'penduduk.id_desa', '=', 'desa.id')
+            ->join('kecamatan', 'desa.id_kecamatan', '=', 'kecamatan.id')
+            ->join('kabupaten', 'kecamatan.id_kabupaten', '=', 'kabupaten.id')
+            ->where('penduduk.id_desa', auth()->user()->desa[0]->id)
             ->orderBy('penduduk.id', 'desc');
 
         return DataTables::of($items)
             ->addColumn('action', function ($row) {
-                // $btn = '';
-                $btn = '<a href="/admin/penduduk/' . $row->id . '/edit" class="btn btn-info"><i class="fas fa-pencil-alt"></i></a> ';
-                $btn .= '<a href="javascript:void(0)" title="Hapus" onclick="delete_data(' . "'" . $row->id . "'" . ')" class="btn btn-danger"><i class="fas fa-trash"></i></a>';
+                $btn = '';
+                auth()->user()->can(['penduduk-edit']) ? $btn .= '<a href="/admin/penduduk/' . $row->id . '/edit" class="btn btn-info"><i class="fas fa-pencil-alt"></i></a> ' : '';
+                auth()->user()->can(['penduduk-delete']) ? $btn .= '<a href="javascript:void(0)" title="Hapus" onclick="delete_data(' . "'" . $row->id . "'" . ')" class="btn btn-danger"><i class="fas fa-trash"></i></a>' : '';
                 return $btn;
             })
             ->editColumn('created_at', function ($row) {

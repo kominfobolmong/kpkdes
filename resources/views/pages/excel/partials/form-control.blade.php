@@ -13,36 +13,14 @@
         </ul>
     </div>
     @endif
-    {{-- <div class="form-group">
-        <label for="jenis">Data</label>
-        <select class="form-control select2" name="id_jenis" style="width: 100%;">
-            <option value="" selected disabled>Choose One</option>
-            @foreach($jeniss as $jenis)
-            <option @if(old('id_jenis')==$jenis->id) selected @endif value="{{ $jenis->id }}">{{ $jenis->nama }}</option>
+    <div class="form-group">
+        <label for="id_desa">Desa</label>
+        <select class="form-control select2" name="id_desa" style="width: 100%;">
+            <option value="" selected disabled>Pilih satu</option>
+            @foreach($desas as $desa)
+            <option @if(old('id_desa') == $desa->id) selected @endif value="{{ $desa->id }}">{{ $desa->nama }}</option>
             @endforeach
         </select>
-    </div>
-    <div class="form-group">
-        <label for="opd">OPD</label>
-        <select class="form-control select2" name="id_opd" style="width: 100%;">
-            <option value="" selected disabled>Choose One</option>
-            @foreach($opds as $opd)
-            <option @if(old('id_opd')==$opd->id) selected @endif value="{{ $opd->id }}">{{ $opd->nama }}</option>
-            @endforeach
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="jenis">Jenis</label>
-        <select class="form-control select2" name="jenis" style="width: 100%;">
-            <option value="" selected disabled>Choose One</option>
-            @foreach($arrs as $arr)
-            <option @if(old('jenis')==$arr) selected @endif value="{{ $arr }}">{{ $arr }}</option>
-            @endforeach
-        </select>
-    </div> --}}
-    <div class="form-group">
-        <label for="tahun">Tahun</label>
-        <input type="text" class="form-control" id="tahun" name="tahun" placeholder="tahun" value="">
     </div>
     <div class="form-group">
         <label for="image">Excel(CSV,XLS,XLSX)</label>

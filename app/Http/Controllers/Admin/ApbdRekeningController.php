@@ -37,18 +37,32 @@ class ApbdRekeningController extends Controller
 
     public function getData()
     {
-        $items = ApbdRekening::select(['apbd_rekening.*', 'sub_bidang.nama as sub_bidang', 'bidang.nama as bidang',  'kecamatan.nama as kecamatan', 'desa.nama as desa', 'sumber_dana.nama as sumber_dana'])
-            ->join('sub_bidang', 'apbd_rekening.id_sub_bidang', '=', 'sub_bidang.id')
-            ->join('bidang', 'sub_bidang.id_bidang', '=', 'bidang.id')
-            ->join('desa', 'apbd_rekening.id_desa', '=', 'desa.id')
-            ->join('kecamatan', 'desa.id_kecamatan', '=', 'kecamatan.id')
-            ->join('sumber_dana', 'apbd_rekening.id_sumber_dana', '=', 'sumber_dana.id')
-            ->orderBy('apbd_rekening.id', 'desc');
+
+        if (auth()->user()->hasRole(['Admin'])) {
+            $items = ApbdRekening::select(['apbd_rekening.*', 'sub_bidang.nama as sub_bidang', 'bidang.nama as bidang',  'kecamatan.nama as kecamatan', 'desa.nama as desa', 'sumber_dana.nama as sumber_dana'])
+                ->join('sub_bidang', 'apbd_rekening.id_sub_bidang', '=', 'sub_bidang.id')
+                ->join('bidang', 'sub_bidang.id_bidang', '=', 'bidang.id')
+                ->join('desa', 'apbd_rekening.id_desa', '=', 'desa.id')
+                ->join('kecamatan', 'desa.id_kecamatan', '=', 'kecamatan.id')
+                ->join('sumber_dana', 'apbd_rekening.id_sumber_dana', '=', 'sumber_dana.id')
+                ->orderBy('apbd_rekening.id', 'desc');
+        } else {
+            $items = ApbdRekening::select(['apbd_rekening.*', 'sub_bidang.nama as sub_bidang', 'bidang.nama as bidang',  'kecamatan.nama as kecamatan', 'desa.nama as desa', 'sumber_dana.nama as sumber_dana'])
+                ->join('sub_bidang', 'apbd_rekening.id_sub_bidang', '=', 'sub_bidang.id')
+                ->join('bidang', 'sub_bidang.id_bidang', '=', 'bidang.id')
+                ->join('desa', 'apbd_rekening.id_desa', '=', 'desa.id')
+                ->join('kecamatan', 'desa.id_kecamatan', '=', 'kecamatan.id')
+                ->join('sumber_dana', 'apbd_rekening.id_sumber_dana', '=', 'sumber_dana.id')
+                ->where('apbd_rekening.id_desa', auth()->user()->desa[0]->id)
+                ->orderBy('apbd_rekening.id', 'desc');
+        }
+
 
         return DataTables::of($items)
             ->addColumn('action', function ($row) {
-                // $btn = '<button disabled class="btn btn-outline-dark">--</button>';
-                $btn = '<a href="/admin/apbd_rekening/' . $row->id . '/edit" class="btn btn-info"><i class="fas fa-pencil-alt"></i></a> <a href="javascript:void(0)" title="Hapus" onclick="delete_data(' . "'" . $row->id . "'" . ')" class="btn btn-danger"><i class="fas fa-trash"></i></a>';
+                $btn = '';
+                auth()->user()->can(['apbd_rekening-edit']) ? $btn .= '<a href="/admin/apbd_rekening/' . $row->id . '/edit" class="btn btn-info"><i class="fas fa-pencil-alt"></i></a> ' : '';
+                auth()->user()->can(['apbd_rekening-delete']) ? $btn .= '<a href="javascript:void(0)" title="Hapus" onclick="delete_data(' . "'" . $row->id . "'" . ')" class="btn btn-danger"><i class="fas fa-trash"></i></a>' : '';
                 return $btn;
             })
             ->editColumn('created_at', function ($row) {

@@ -61,6 +61,9 @@
                             <th>Desa</th>
                             <th>Item Pekerjaan</th>
                             <th>Anggaran</th>
+                            <th>Target<br />Tenaga Kerja</th>
+                            <th>Realisasi<br />Tenaga Kerja</th>
+                            <th>Prosentase</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -70,6 +73,9 @@
                             <td>{{ $item->desa->nama ?? null }}</td>
                             <td>{{ $item->nama ?? null }}</td>
                             <td>{{ number_format($item->anggaran) ?? null }}</td>
+                            <td>{{ $item->target ?? null }}</td>
+                            <td>{{ $item->tenaga_kerja->count() ?? null }}</td>
+                            <td>{{ (($item->tenaga_kerja->count()/$item->target)*0.1) }}%</td>
                         </tr>
                     @endforeach
                     </tbody>

@@ -13,13 +13,17 @@
         </ul>
     </div>
     @endif  
+    @php
+    $id_desa = auth()->user()->desa[0]->id ?? null;
+    @endphp
     <div class="row">
-        <div class="col-2">
+        <div class="{{ $id_desa == null ? 'col-2' : 'col' }}">
             <div class="form-group">
                 <label for="tahun">Tahun</label>
                 <input type="text" class="form-control" id="tahun" name="tahun" placeholder="Tahun" value="{{ old('tahun') ?? $item->tahun }}">
             </div>
         </div>
+        @if($id_desa == null)
         <div class="col">
             <div class="form-group">
                 <label for="id_kabupaten">Kabupaten</label>
@@ -31,8 +35,10 @@
                 </select>
             </div>
         </div>
+        @endif
     </div>
     
+    @if($id_desa == null)
     <div class="row">
         <div class="col">
             <div class="form-group">
@@ -51,6 +57,9 @@
             </div>
         </div>
     </div>
+    @else
+    <input type="hidden" name="id_desa" value="{{ $id_desa }}" />
+    @endif
 
 
     <div class="row">
@@ -74,9 +83,6 @@
             </div>
         </div>
     </div>
-
-    
-   
 
     <div class="row">
         <div class="col-2">

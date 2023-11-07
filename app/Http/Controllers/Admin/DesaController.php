@@ -32,8 +32,12 @@ class DesaController extends Controller
     public function getData()
     {
 
-        $items = Desa::select(['desa.*', 'kecamatan.nama as kecamatan'])
+        auth()->user()->hasRole(['Admin']) ?
+            $items = Desa::select(['desa.*', 'kecamatan.nama as kecamatan'])
             ->join('kecamatan', 'desa.id_kecamatan', '=', 'kecamatan.id')
+            ->orderBy('desa.id', 'desc') : $items = Desa::select(['desa.*', 'kecamatan.nama as kecamatan'])
+            ->join('kecamatan', 'desa.id_kecamatan', '=', 'kecamatan.id')
+            ->where('id', auth()->user()->desa[0]->id)
             ->orderBy('desa.id', 'desc');
 
         return DataTables::of($items)

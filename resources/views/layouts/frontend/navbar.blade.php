@@ -23,6 +23,9 @@
                 <li class="nav-item">
                     <a href="/pkt" class="nav-link">PKT</a>
                 </li>
+                <li class="nav-item">
+                    <a href="/login" class="nav-link">Masuk</a>
+                </li>
                 
             </ul>
         </div>
