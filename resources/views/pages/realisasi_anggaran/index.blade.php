@@ -6,15 +6,15 @@
             processing: true,
             serverSide: true,
             autoWidth: false,
-            ajax: '/admin/apbd_rekening/get_data',
+            ajax: '/admin/realisasi_anggaran/get_data',
             columns: [{
                     data: 'id',
-                    name: 'apbd_rekening.id',
+                    name: 'realisasi_anggaran.id',
                     visible: false
                 },
                 {
                     data: 'created_at',
-                    name: 'apbd_rekening.created_at'
+                    name: 'realisasi_anggaran.created_at'
                 },
                 {
                     data: 'kecamatan',
@@ -26,19 +26,27 @@
                 },
                 {
                     data: 'tahun',
-                    name: 'apbd_rekening.tahun'
+                    name: 'realisasi_anggaran.tahun'
                 },
                 {
                     data: 'kode',
-                    name: 'apbd_rekening.kode'
+                    name: 'realisasi_anggaran.kode'
                 },
                 {
                     data: 'uraian',
-                    name: 'apbd_rekening.uraian'
+                    name: 'realisasi_anggaran.uraian'
                 },
                 {
                     data: 'anggaran',
-                    name: 'apbd_rekening.anggaran'
+                    name: 'realisasi_anggaran.anggaran'
+                },
+                {
+                    data: 'realisasi',
+                    name: 'realisasi_anggaran.realisasi'
+                },
+                {
+                    data: 'lebih_kurang',
+                    name: 'realisasi_anggaran.lebih_kurang'
                 },
                 {
                     data: 'action',
@@ -55,7 +63,7 @@
         if (confirm('Are you sure delete this  data?')) {
 
             $.ajax({
-                url: "/admin/apbd_rekening/" + id,
+                url: "/admin/realisasi_anggaran/" + id,
                 type: "DELETE",
                 data: {
                     "_token": "{{ csrf_token() }}",
@@ -79,10 +87,10 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">APBD</h3>
+                        <h3 class="card-title">REALISASI ANGGARAN</h3>
                         <div class="card-tools">
-                            @can('apbd_rekening-create')
-                            <a href="{{ route('apbd_rekening.create') }}" class="btn btn-primary">
+                            @can('realisasi_anggaran-create')
+                            <a href="{{ route('realisasi_anggaran.create') }}" class="btn btn-primary">
                                 <i class="fas fa-plus"></i> Create
                             </a>
                             @endcan
@@ -107,6 +115,8 @@
                                     <th>Kode</th>
                                     <th>Uraian</th>
                                     <th>Anggaran</th>
+                                    <th>Realisasi</th>
+                                    <th>Kurang/Lebih</th>
                                     <th>--</th>
                                 </tr>
                             </thead>
@@ -123,6 +133,8 @@
                                     <th>Kode</th>
                                     <th>Uraian</th>
                                     <th>Anggaran</th>
+                                    <th>Realisasi</th>
+                                    <th>Kurang/Lebih</th>
                                     <th>--</th>
                                 </tr>
                             </tfoot>

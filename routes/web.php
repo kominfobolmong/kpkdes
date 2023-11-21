@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\PendudukController;
 use App\Http\Controllers\Admin\PuskesmasController;
 use App\Http\Controllers\Admin\SekolahController;
 use App\Http\Controllers\Admin\ItemPekerjaanController;
+use App\Http\Controllers\Admin\RealisasiAnggaranController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -57,6 +58,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('penduduk/get_data/', [KecamatanController::class, 'getData']);
     Route::get('apbd_rekening/get_data/', [ApbdRekeningController::class, 'getData']);
     Route::get('apbd_rekening/get_apbd_rekening/{id}/{tahun}', [ApbdRekeningController::class, 'getApbdRekening']);
+    Route::get('realisasi_anggaran/get_data/', [RealisasiAnggaranController::class, 'getData']);
     Route::get('tenaga_kerja/get_data/', [TenagaKerjaController::class, 'getData']);
     Route::get('bidang/get_data/', [BidangController::class, 'getData']);
     Route::get('desa/get_data/', [DesaController::class, 'getData']);
@@ -90,4 +92,5 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::resource('sub_bidang', SubBidangController::class);
     Route::resource('item_pekerjaan', ItemPekerjaanController::class);
     Route::resource('sumber_dana', SumberDanaController::class);
+    Route::resource('realisasi_anggaran', RealisasiAnggaranController::class);
 });

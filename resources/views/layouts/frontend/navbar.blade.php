@@ -3,9 +3,9 @@
     <div class="container">
         <a href="/" class="navbar-brand">
             <div class="d-flex justify-content-between">
-                {{-- <img src="/sipoda.png" style="height: 50px;" /> --}}
+                <img src="{{ asset('kpkdes-logo.jpeg') }}" style="height: 125px;" />
                 <div>
-                    <h1 class="text-bold text-dark h4">KPKDES</h1>
+                    {{-- <h1 class="text-bold text-dark h4">KPKDES</h1> --}}
                     {{-- <h2 class="h6 text-sm mt-n2 text-secondary">Sistem Informasi Potensi Daerah</h2> --}}
                 </div>
             </div>
@@ -26,7 +26,7 @@
                 <li class="nav-item">
                     <a href="/login" class="nav-link">Masuk</a>
                 </li>
-                
+
             </ul>
         </div>
     </div>

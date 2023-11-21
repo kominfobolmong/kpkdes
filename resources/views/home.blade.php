@@ -18,7 +18,7 @@
                 var labels = [];
                 var data = [];
                 var backgroundColor = ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'];
-                
+
                 $.each(response.result, function(k, v) {
                     labels.push(v.desa);
                     data.push(v.jml);
@@ -63,7 +63,7 @@
                 var labels = [];
                 var data = [];
                 var backgroundColor = ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'];
-                
+
                 $.each(response.result, function(k, v) {
                     labels.push(v.desa);
                     data.push(v.jml);
@@ -133,6 +133,42 @@
         </a>
     </div>
 </section>
+
+<section>
+    <div class="container mt-4 mb-4">
+        <h1 class="text-center h2 mb-5 text-uppercase" style="color: red;">PENDAPATAN DAN REALISASI ANGGARAN PER DESA</h1>
+        <div class="row text-center">
+            @foreach ($items as $item)
+            <div class="col-4">
+                <div class="">
+                    <h5 class="text-bold">{{ $item->kecamatan }}</h5>
+                    <h4 class="text-bold">{{ $item->desa }}</h4>
+                    <div class="small-box bg-info">
+                        <a href="#" class="small-box-footer">Pendapatan Transfer</a>
+                        <div class="inner">
+                          <p>Anggaran (Rp)</p>
+                          <h3>Rp{{ number_format($item->anggaran) }}</h3>
+                        </div>
+                        <div class="inner">
+                            <p>Realisasi (Rp)</p>
+                            <h3>Rp{{ number_format($item->realisasi) }}</h3>
+                          </div>
+                          <div class="inner">
+                            <p>Lebih/(Kurang)Rp</p>
+                            @if ($item->realisasi > $item->anggaran)
+                            <h3 style="color: rgb(255, 63, 63);">Rp{{ number_format($item->lebih_kurang) }}</h3>
+                            @else
+                            <h3>Rp{{ number_format($item->lebih_kurang) }}</h3>
+                            @endif
+                          </div>
+                      </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
 <section class="bg-dark pt-4 pb-4">
     <div class="container">
         <div class="row">
@@ -190,7 +226,7 @@
             <div class="card card-danger">
                 <div class="card-header">
                   <h3 class="card-title">Grafik PKT per Desa/Kelurahan</h3>
-  
+
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                       <i class="fas fa-minus"></i>
@@ -212,7 +248,7 @@
             <div class="card card-danger">
                 <div class="card-header">
                   <h3 class="card-title">Grafik serapan tenaga kerja per desa</h3>
-  
+
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                       <i class="fas fa-minus"></i>

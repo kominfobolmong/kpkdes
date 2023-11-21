@@ -24,7 +24,7 @@
                with font-awesome or any other icon font library -->
 
                  <!-- PARIWISATA -->
-                 @canany('apbd_rekening-list', 'tenaga_kerja-list')
+                 @canany('realisasi_anggaran-list', 'apbd_rekening-list', 'tenaga_kerja-list')
                  <li class="nav-item">
                      <a href="#" class="nav-link">
                          <i class="nav-icon far fa-circle text-danger"></i>
@@ -33,6 +33,17 @@
                          </p>
                      </a>
                      <ul class="nav nav-treeview">
+
+                        @can('realisasi_anggaran-list')
+                        <li class="nav-item">
+                            <a href="{{ route('realisasi_anggaran.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>
+                                    Realisasi Anggaran
+                                </p>
+                            </a>
+                        </li>
+                        @endcan
 
                         @can('apbd_rekening-list')
                         <li class="nav-item">
@@ -55,7 +66,7 @@
                              </a>
                         </li>
                         @endcan
-                         
+
                      </ul>
                  </li>
                 @endcanany
@@ -92,7 +103,7 @@
                          </p>
                      </a>
                      <ul class="nav nav-treeview">
-                        
+
                          @can('bidang-list')
                          <li class="nav-item">
                              <a href="{{ route('bidang.index') }}" class="nav-link">
@@ -175,7 +186,7 @@
                 @endcanany
 
                 {{-- @@canany(['update', 'view', 'delete'], $post) --}}
-                    
+
                 @endcanany
                  @canany('role-list', 'user-list')
                  <li class="nav-item">

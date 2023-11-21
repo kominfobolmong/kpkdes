@@ -22,6 +22,7 @@ use App\Models\Penduduk;
 use App\Models\Perkebunan;
 use App\Models\Pertanian;
 use App\Models\Puskesmas;
+use App\Models\RealisasiAnggaran;
 use App\Models\RekapitulasiPendidik;
 use App\Models\Sekolah;
 use App\Models\TenagaKerja;
@@ -48,8 +49,13 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+        $items = RealisasiAnggaran::select(['realisasi_anggaran.anggaran', 'realisasi_anggaran.realisasi', 'realisasi_anggaran.lebih_kurang', 'kecamatan.nama as kecamatan', 'desa.nama as desa'])
+            ->join('desa', 'realisasi_anggaran.id_desa', '=', 'desa.id')
+            ->join('kecamatan', 'desa.id_kecamatan', '=', 'kecamatan.id')
+            ->orderBy('realisasi_anggaran.id', 'desc')
+            ->get();
 
-        return view('home');
+        return view('home', compact('items'));
     }
 
     public function pkt(Request $request)
