@@ -110,18 +110,17 @@
         </ol>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img class="d-block w-100" src="/slide.jpg" alt="BOLMONG HEBAT">
+                <img class="d-block w-100" src="{{ asset('banner1.png') }}" alt="BOLMONG HEBAT">
                 <div class="carousel-caption d-none d-md-block">
-                    <!-- <h5>BOLMONG HEBAT</h5> -->
-                    <!-- <p>Selamat datang di website SIPODAH "Sistem Informasi Potensi Daerah" Kabupaten Bolaang Mongondow</p> -->
                 </div>
             </div>
-            <!-- <div class="carousel-item">
-                <img class="d-block w-100" src=".../800x400?auto=yes&bg=666&fg=444&text=Second slide" alt="Second slide">
-            </div>
+
             <div class="carousel-item">
-                <img class="d-block w-100" src=".../800x400?auto=yes&bg=555&fg=333&text=Third slide" alt="Third slide">
-            </div> -->
+                <img class="d-block w-100" src="{{ asset('banner2.png') }}" alt="BOLMONG HEBAT">
+                <div class="carousel-caption d-none d-md-block">
+                </div>
+            </div>
+
         </div>
         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -136,7 +135,7 @@
 
 <section>
     <div class="container mt-4 mb-4">
-        <h1 class="text-center h2 mb-5 text-uppercase" style="color: red;">PENDAPATAN DAN REALISASI ANGGARAN PER DESA</h1>
+        <h1 class="text-center h2 mb-5 mt-5 text-uppercase" style="color: red;">PENDAPATAN DAN REALISASI ANGGARAN PER DESA</h1>
         <div class="row text-center">
             @foreach ($items as $item)
             <div class="col-4">
