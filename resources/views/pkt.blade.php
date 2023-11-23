@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="/template/backend/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="/template/backend/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="/template/backend/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-    
+
 @endpush
 @push('addon-script')
 <!-- DataTables  & Plugins -->
@@ -43,9 +43,9 @@
         <p>&nbsp;</p>
         <div class="row">
             <div class="col">
-                
+
             </div>
-            
+
         </div>
     </div>
 </section>
@@ -74,15 +74,44 @@
                             <td>{{ $item->nama ?? null }}</td>
                             <td>{{ number_format($item->anggaran) ?? null }}</td>
                             <td>{{ $item->target ?? null }}</td>
-                            <td>{{ $item->tenaga_kerja->count() ?? null }}</td>
+                            <td>
+                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default{{ $item->id ?? null }}">
+                                    {{ $item->tenaga_kerja->count() ?? null }}
+                                </button>
+                            </td>
                             <td>{{ (($item->tenaga_kerja->count()/$item->target)*0.1) }}%</td>
                         </tr>
+
+                            <div class="modal fade" id="modal-default{{ $item->id ?? null }}">
+                                <div class="modal-dialog">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                <h4 class="modal-title">List Nama Tenaga Kerja</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                <ol>
+                                    @foreach($item->tenaga_kerja as $tenaga_kerja)
+                                    <li>{{ $tenaga_kerja->penduduk->nama ?? null }}</li>
+                                    @endforeach
+                                </ol>
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                </div>
+                                </div>
+
+                                </div>
+
+                                </div>
                     @endforeach
                     </tbody>
-                    
+
                 </table>
             </div>
         </div>
     </div>
 </section>
+
 @endsection
